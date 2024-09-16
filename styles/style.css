@@ -1,0 +1,70 @@
+body{
+    width: 100vw;
+    height: 100vh;
+}
+main{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    flex-wrap: wrap;
+}
+
+#barra_lateral{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 25%;
+    background-color: black;
+}
+
+#barra_lateral ul{
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100%;
+    padding: 50px;
+
+}
+
+#barra_lateral ul li{
+    border-radius: 10px;
+    border: 1px grey solid;
+    background-color: rgba(3, 3, 153, 0.308);
+    padding: 10px;
+    font-size: 24px;
+    color: white;
+}
+
+#barra_lateral ul li a{
+    text-decoration: none;
+    color: white;
+
+}
+
+#barra_lateral ul li:hover{
+    background-color: aliceblue;
+    color: aliceblue;
+}
+
+#main_section{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 75%;
+    background-color: brown;
+}
+
+footer{
+    width: 100%;
+    text-align: center;
+}
+
+
+/* 
+a tela fica no centro, assim que é clicado em um dos 
+botões, é puxado para o lado (padrão de agora) e abre o conteúdo
+em 70% como previsto
+animação de deslizando para o lado
+*/
