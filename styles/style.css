@@ -15,7 +15,11 @@ main{
     flex-direction: column;
     justify-content: flex-start;
     width: 25%;
-    background-color: black;
+    background-image: linear-gradient(
+        to bottom, 
+        #001F54,
+        #034078, 
+        #1282A2);
 }
 
 #barra_lateral ul{
@@ -42,6 +46,11 @@ main{
     color: white;
 
 }
+/*
+001F54
+034078
+1282A2
+*/
 
 #barra_lateral ul li:hover{
     background-color: aliceblue;
@@ -51,14 +60,27 @@ main{
 #main_section{
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
     width: 75%;
-    background-color: brown;
+    background-image: linear-gradient(
+        to right, 
+        #034078, 
+        #1282A2);
+}
+
+#main_section h2{
+    color: white;
 }
 
 footer{
     width: 100%;
     text-align: center;
+}
+
+#lista_items{
+    border: 1px;
 }
 
 
