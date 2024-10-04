@@ -5,7 +5,7 @@ header {
   justify-content: space-between;
   margin: 15px;
   width: 100%;
-  height: 50px;
+  height: 75px;
 }
 img {
   width: 25%;
@@ -103,11 +103,29 @@ main {
   gap: 10px;
   width: 100%;
   justify-content: space-evenly;
-
 }
 
-/* */
-@media (width <= 1250px) {
+@media only screen and (max-width: 860px) {
+  .botoes-input::before {
+    content: "";
+  }
+  .botoes-input {
+    background-size: 40px 50px; /* Tamanho da imagem */
+    background-repeat: no-repeat; /* Não repetir a imagem */
+    background-position: center; /* Centralizar a imagem */
+    padding: 0; /* Remove padding para ajustar à imagem */
+    width: 50px; /* Largura fixa para o botão */
+    height: 50px; /* Altura fixa para o botão */
+    border: none; /* Remove bordas */
+  }
+  .botoes-input#adicionar {
+    background-image: url("/res/images/adicionar_bttn.svg"); /* Imagem de fundo */
+  }
+  .botoes-input#atualizar {
+    background-image: url("/res/images/refresh_button.svg"); /* Imagem de fundo */
+  }
+
+  
   /*
     mudar footer para deixar de ser 
     fixed
