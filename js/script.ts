@@ -1,3 +1,5 @@
+const adicionarPopup = document.getElementById("adicionar-popup") as HTMLDivElement;
+
 function itemDeLista(){
     /* 
     ideia é montar o html aqui para quando for
@@ -13,20 +15,11 @@ function adicionarUsuarios(){
 function atualizarUsuarios(){
 
 }
-/*
-const button = document.getElementById("botoes-input");
-function trocaTypeViaScreenSize(){
-    if (window.innerWidth < 860){
-        button.type = "image";
-        //input.setAttribute("type", "image");
-        button.src = "/res/images/adicionar_bttn.svg";
-        //input.setAttribute("src", "/res/images/adicionar_bttn.svg")
-        button.innerHTML = "<img src='/res/images/adicionar_bttn.svg' height: '50' width: '40'>";
-    }else{
-        button.innerHTML = "Adicionar";
-    }
+
+function adicionarScreen(){
+    adicionarPopup.classList.add("abrir-popup");
 }
 
-window.addEventListener("resize", trocaTypeViaScreenSize);
-
-trocaTypeViaScreenSize();*/
+function removerScreen(){
+    adicionarPopup.classList.remove("abrir-popup");
+}
