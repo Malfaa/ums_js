@@ -60,8 +60,12 @@
         <h1>Users</h1>
         <section class="secao-botoes-e-lista">
           <section class="botoes">
-            <button class="botoes-input" id="adicionar">Adicionar</button>
-            <button class="botoes-input" id="atualizar">Atualizar</button>
+            <button class="botoes-input" id="adicionar">
+              <p>Adicionar</p>
+            </button>
+            <button class="botoes-input" id="atualizar">
+              <p>Atualizar</p>
+            </button>
           </section>
           <section class="secao-lista-users">
             <ul class="lista-de-users">
@@ -102,8 +106,22 @@
           </section>
         </section>
       </section>
+      <div id="adicionar-popup">
+        <input
+          type="text"
+          name="nome"
+          class=""
+          placeholder="Nome"
+        />
+        <input
+          type="password"
+          name="matricula"
+          class=""
+          placeholder="Matricula"
+        />
+      </div>
     </main>
     <footer>© 2024 GMalfa - Todos os direitos reservados</footer>
-    <!--script src="/js/script.ts"></script-->
+    <script src="/js/script.ts"></script>
   </body>
 </html>

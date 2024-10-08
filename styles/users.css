@@ -1,6 +1,79 @@
 @import url("/style.css");
 
-@media only screen and (min-width: 900px) {
+header {
+  display: none;
+}
+
+.conteudo-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: white;
+}
+
+.botoes{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 30px;
+}
+
+.secao-lista-users {
+  width: 100%;
+  max-height: 100%;
+  overflow: scroll;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  border: 1px grey solid;
+  border-radius: 4px;
+  box-shadow: 1px 1px 1px 1px black;
+}
+
+.botoes-input {
+  background-size: 50px 50px; /* Tamanho da imagem */
+  background-repeat: no-repeat; /* Não repetir a imagem */
+  background-position: center; /* Centralizar a imagem */
+  padding: 0; /* Remove padding para ajustar à imagem */
+  width: 50px; /* Largura fixa para o botão */
+  height: 50px; /* Altura fixa para o botão */
+  border: none; /* Remove bordas */
+  border-radius: 12px;
+}
+
+.adicionar-popup{
+  display: hidden;
+}
+
+.abrir-popup{
+  
+}
+
+
+@media (min-width:320px) and (max-width: 1023px){
+  .botoes-input#adicionar {
+    background-image: url("/res/images/adicionar_bttn.svg"); /* Imagem de fundo */
+  }
+  .botoes-input#adicionar p,
+  .botoes-input#atualizar p{
+    visibility: hidden;
+  }
+  .botoes-input#atualizar {
+    background-image: url("/res/images/refresh_button.svg"); /* Imagem de fundo */
+  }
+  #logo {
+    display: none;
+  }
+  .secao-botoes-e-lista {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 100%;
+    gap: 20px;
+  }
+}
+
+@media (min-width: 1024px) {
   header {
     display: flex;
     justify-content: flex-end;
@@ -95,17 +168,6 @@
     background-color: #d0cfff;
   }
 
-  .secao-lista-users {
-    width: 100%;
-    max-height: 100%;
-    overflow: scroll;
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-    border: 1px grey solid;
-    border-radius: 4px;
-    box-shadow: 2px 2px 3px 2px black;
-  }
-
   .lista-de-users {
     list-style-type: none;
     display: flex;
@@ -115,65 +177,4 @@
     width: 100%;
     justify-content: space-evenly;
   }
-}
-@media only screen and (max-width: 412px) {
-  header{
-    display: none;
-  }
-
-
-  .conteudo-main{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .secao-botoes-e-lista{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    width: 100%;
-    gap: 20px;
-    padding: 10px;
-  }
-
-  .secao-lista-users{
-
-  }
-
-  .botoes-input::before {
-    content: "";
-  }
-  .botoes-input {
-    background-size: 50px 50px; /* Tamanho da imagem */
-    background-repeat: no-repeat; /* Não repetir a imagem */
-    background-position: center; /* Centralizar a imagem */
-    padding: 0; /* Remove padding para ajustar à imagem */
-    width: 50px; /* Largura fixa para o botão */
-    height: 50px; /* Altura fixa para o botão */
-    border: none; /* Remove bordas */
-    border-radius: 12px;
-  }
-  .botoes-input#adicionar {
-    background-image: url("/res/images/adicionar_bttn.svg"); /* Imagem de fundo */
-  }
-  .botoes-input#atualizar {
-    background-image: url("/res/images/refresh_button.svg"); /* Imagem de fundo */
-  }
-
-  #logo {
-    position: absolute;
-    top: 10px;
-    left: 60px;
-    width: 120px;
-    height: 120px;
-    display: none;
-  }
-
-  /*
-    mudar footer para deixar de ser 
-    fixed
-    colocar scroll na tela, tirar vh e vw 100
-    */
 }
