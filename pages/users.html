@@ -1,11 +1,122 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>USM-Users</title>
-</head>
-<body>
-    
-</body>
+    <link rel="stylesheet" href="/styles/users.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="brand">
+          <h1>User Management System</h1>
+          <img
+            src="/res/images/logo-240.svg"
+            alt="UMS Logo"
+            title="UMS Logo"
+            id="logo"
+          />
+        </div>
+        <ul class="lista-de-navegacao">
+          <li>
+            <a href="/pages/users.html" id="same-page">
+              <img
+                src="/res/images/user_icon.svg"
+                alt="Users"
+                title="Users"
+                height="25"
+                width="25"
+              />Users
+            </a>
+          </li>
+          <li>
+            <a href="/pages/">
+              <img src="" alt="" title="Management" />Management
+            </a>
+          </li>
+          <li>
+            <a href="/pages/">
+              <img src="" alt="" title="Configuration" />Configuration
+            </a>
+          </li>
+          <li>
+            <a href="/index.html">
+              <img src="" alt="" title="Logout" />Logout
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section class="conteudo-main">
+        <img
+          src="/res/images/user_icon.svg"
+          alt="Users Icone"
+          title="Users"
+          width="40px"
+          height="40px"
+        />
+        <h1>Users</h1>
+        <section class="secao-botoes-e-lista">
+          <section class="botoes">
+            <button class="botoes-input" id="adicionar">
+              <p>Adicionar</p>
+            </button>
+            <button class="botoes-input" id="atualizar">
+              <p>Atualizar</p>
+            </button>
+          </section>
+          <section class="secao-lista-users">
+            <ul class="lista-de-users">
+              <li>a</li>
+              <li>b</li>
+              <li>c</li>
+              <li>d</li>
+              <li>e</li>
+              <li>f</li>
+              <li>g</li>
+              <li>b</li>
+              <li>c</li>
+              <li>d</li>
+              <li>e</li>
+              <li>f</li>
+              <li>g</li>
+              <li>b</li>
+              <li>c</li>
+              <li>d</li>
+              <li>e</li>
+              <li>f</li>
+              <li>g</li>
+              <li>b</li>
+              <li>c</li>
+              <li>d</li>
+              <li>e</li>
+              <li>f</li>
+              <li>g</li>
+              <li>b</li>
+              <li>c</li>
+              <li>d</li>
+              <li>e</li>
+              <li>f</li>
+              <li>g</li>
+
+              <li>g</li>
+            </ul>
+          </section>
+        </section>
+      </section>
+      <div id="adicionar-popup">
+        <input type="text" name="nome" class="" placeholder="Nome" />
+        <input
+          type="password"
+          name="matricula"
+          class=""
+          placeholder="Matricula"
+        />
+      </div>
+    </main>
+    <footer>© 2024 GMalfa - Todos os direitos reservados</footer>
+    <script src="/js/script.ts"></script>
+  </body>
 </html>
