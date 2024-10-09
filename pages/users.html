@@ -25,8 +25,8 @@
                 src="/res/images/user_icon.svg"
                 alt="Users"
                 title="Users"
-                height="25"
-                width="25"
+                height="25px"
+                width="25px"
               />Users
             </a>
           </li>
@@ -60,7 +60,7 @@
         <h1>Users</h1>
         <section class="secao-botoes-e-lista">
           <section class="botoes">
-            <button class="botoes-input" id="adicionar">
+            <button class="botoes-input" id="adicionar" type="button">
               <p>Adicionar</p>
             </button>
             <button class="botoes-input" id="atualizar">
@@ -100,23 +100,28 @@
               <li>e</li>
               <li>f</li>
               <li>g</li>
-
               <li>g</li>
             </ul>
           </section>
         </section>
       </section>
       <div id="adicionar-popup">
-        <input type="text" name="nome" class="" placeholder="Nome" />
+        <button type="button" class="fechar-janela" id="fechar"></button>
+          <div class="adicionar-header">       
+             <img src="/res/images/add_user.svg" alt="Adicionar Usuário" width="40px" height="40px">
+             <h2>Adicionar Usuário</h2>
+          </div>
+        <input type="text" name="nome" class="campo-texto" placeholder="Nome" />
         <input
           type="password"
           name="matricula"
-          class=""
+          class="campo-texto"
           placeholder="Matricula"
         />
+        <button type="button" class="botao-adicionar"><p>Adicionar</p></button>
       </div>
     </main>
     <footer>© 2024 GMalfa - Todos os direitos reservados</footer>
-    <script src="/js/script.ts"></script>
+    <script src="/js/script.js"></script>
   </body>
 </html>

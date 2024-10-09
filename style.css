@@ -92,6 +92,7 @@ html {
     background-image: linear-gradient(to bottom, #001f54, #034078, #1282a2);
     font-family: "Inconsolata";
     overflow-x: hidden;
+    overflow-y: hidden;
     padding-top: 0;
   }
 

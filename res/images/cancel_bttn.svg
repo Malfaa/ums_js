@@ -1,0 +1,7 @@
+<svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="cancel_bttn">
+<rect width="56" height="56" rx="28" fill="#FF5E5E" fill-opacity="0.7"/>
+<rect x="0.5" y="0.5" width="55" height="55" rx="27.5" stroke="black" stroke-opacity="0.4"/>
+<path id="Vector" d="M14.6609 44.0609L11.9391 41.3391L25.2776 28L11.9391 14.6609L14.6609 11.9391L28 25.2776L41.3391 11.9391L44.0609 14.6609L30.7224 28L44.0609 41.3391L41.3391 44.0609L28 30.7224L14.6609 44.0609Z" fill="#212121"/>
+</g>
+</svg>

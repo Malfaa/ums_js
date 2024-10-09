@@ -74,6 +74,7 @@ header {
   border-radius: 4px;
   box-shadow: 1px 1px 1px 1px black;
   padding: 8px;
+  background-color: #235061;
 }
 
 .lista-de-users {
@@ -86,8 +87,98 @@ header {
   justify-content: space-evenly;
 }
 
+/* Adicionar */
+
 #adicionar-popup {
   display: none;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  border: 1px grey solid;
+  text-align: center;
+  width: 80vw;
+  height: 80vh;
+  background-color: rgb(3 44 73 / 96%);
+  border-radius:8px;
+  padding: 20px;
+
+  position: absolute;
+  top: 10%;
+  left: 10%;
+}
+
+#abrir-popup {
+  visibility: visible;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: 50%;
+}
+
+.item {
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  background: rgba(220, 220, 220, 0.2);
+  display: flex;
+  width: 305px;
+  height: 100px;
+  min-width: 300px;
+  max-width: 310px;
+  min-height: 100px;
+  max-height: 100px;
+  padding: 0px 5px;
+  align-items: center;
+  gap: 10px;
+}
+
+.campo-texto {
+  display: flex;
+  /* flex-grow: 1; */
+  width: 100%;
+  height: 10%;
+  padding: 10px;
+  align-items: center;
+  font-size: larger;
+  gap: 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  background: rgba(220, 220, 220, 0.7);
+}
+
+.adicionar-header {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  color: white;
+  margin: 10px;
+}
+
+.botao-adicionar {
+  height: 50px;
+  width: 50px;
+  background-image: url(/res/images/check_bttn.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 100%;
+  border: none;
+}
+
+.botao-adicionar p {
+  visibility: hidden;
+}
+
+.fechar-janela{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-image: url(/res/images/cancel_bttn.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 100%;
+  border: none;
+  width: 40px;
+  height: 40px;
 }
 
 @media (max-width: 575px) and (orientation: landscape) {
@@ -136,7 +227,7 @@ header {
     width: 42vh;
     height: 14vh;
     justify-content: center;
-}
+  }
 
   #logo {
     display: block;
@@ -181,9 +272,8 @@ header {
     background-color: #b1b1c5;
   }
 
-  #same-page{
+  #same-page {
     background-color: #818197;
-    
   }
 
   .conteudo-main {
@@ -246,6 +336,20 @@ header {
     width: 100%;
     justify-content: space-evenly;
   }
+
+  /* Adicionar */
+  .botao-adicionar {
+    height: 8vh;
+    width: 40%;
+    background-image: none;
+    background-color: rgb(154, 250, 154);
+    font-size: 22px;
+    border: 1px rgb(38, 83, 24) solid;
+    border-radius: 10px;
+  }
+  .botao-adicionar p {
+    visibility: visible;
+  }
 }
 /*Extra large	xl*/
 @media (min-width: 1200px) {
@@ -288,6 +392,7 @@ header {
     justify-content: space-around;
     list-style-type: none;
     width: 100%;
+    gap: 10px;
     height: 11vh;
     align-items: center;
   }
