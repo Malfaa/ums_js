@@ -1,0 +1,16 @@
+{
+  "name": "ums_js",
+  "version": "1.0.0",
+  "description": "*U.M.S_JS*",
+  "main": "/src/js/script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "GMalfa",
+  "license": "ISC",
+  "homepage": "https://github.com/Malfaa/ums_js",
+  "dependencies": {
+    "firebase": "^10.14.1"
+  }
+}
