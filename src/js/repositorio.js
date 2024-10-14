@@ -1,4 +1,4 @@
-export const atualizarBotao = document.getElementById('atualizar');
+export const atualizarBotao = document.getElementById('atualizar-tela');
 
 
 export function atualizarBanco(){

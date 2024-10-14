@@ -1,45 +1,25 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";//'firebase/app'
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";//"firebase/auth";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";//"firebase/firestore";
-//TODO firebase in project
-import * as repositorio from "/src/js/repositorio/repositorio.js";
+import * as repositorio from "/src/js/repositorio.js";
+import * as api from "/src/js/apiservice.js";
 
-/*
+//Login Screen
 
-    //Import the functions you need from the SDKs you need
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-analytics.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-
-    */
-
-//TODO verificar firebase
-
-const firebaseConfig = initializeApp({
-  apiKey: "AIzaSyBO18BnszU-Bv99DMa9keDx_0kEL65q6kk",
-  authDomain: "user-management-system-8228c.firebaseapp.com",
-  projectId: "user-management-system-8228c",
-  storageBucket: "user-management-system-8228c.appspot.com",
-  messagingSenderId: "148312015278",
-  appId: "1:148312015278:web:5a8bb36c98ea4826cf483f",
-  measurementId: "G-XZ8YEFEQP8",
-});
-
-const auth = getAuth(firebaseConfig);
-const db = getFirestore(firebaseConfig);
-
-onAuthStateChanged(auth, (user) => {
-  if (user !== null) {
-    console.log("logged in");
-  } else {
-    console.log("no user");
-  }
-});
+const logarGoogle = document.getElementById("google-log");
 
 
+
+//Users Screen
 const adicionarPopup = document.querySelector("#adicionar-popup");
-const adicionarBotao = document.getElementById("adicionar");
+const adicionarBotao = document.getElementById("adicionar-tela");
 const fecharJanelaBotao = document.getElementById("fechar");
+
+//Adicionar
+const getUser = document.getElementById("campo-nome");
+const getMatricula = document.getElementById("campo-matricula");
+const adicionarUser = document.getElementById("adicionar");
+
+//Atualizar
+const atualizarBotao = document.getElementById('atualizar-tela');
+
 
 function adicionarScreen() {
   if (adicionarPopup.style.display === "none") {
@@ -53,13 +33,16 @@ function fecharJanela() {
   adicionarPopup.style.display = "none";
 }
 
-adicionarBotao.addEventListener("click", adicionarScreen);
+//Eventos
 
+logarGoogle.addEventListener("click", api.googleAuth);
+
+adicionarBotao.addEventListener("click", adicionarScreen);
+adicionarUser.addEventListener("click", api.adicionarUser(getUser, getMatricula));
 repositorio.atualizarBotao.addEventListener(
   "click",
   repositorio.atualizarBanco
 );
-
 fecharJanelaBotao.addEventListener("click", fecharJanela);
 
 // TODO continuação
