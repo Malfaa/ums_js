@@ -30,14 +30,14 @@ function adicionarScreen() {
 
 function fecharJanela() {
   adicionarPopup.style.display = "none";
-}
+};
 
 //Eventos
 
-for (let i = 0; i < botaoGoogle.length; i++) {
+/*for (let i = 0; i < botaoGoogle.length; i++) {
   botaoGoogle[i].addEventListener("click", api.googleAuth());
-};
-adicionarBotao.addEventListener("click", adicionarScreen);
+};*/
+adicionarBotao.addEventListener("click", adicionarScreen());
 adicionarUser.addEventListener("click", api.adicionarUser(getUser, getMatricula));
 repositorio.atualizarBotao.addEventListener(
   "click",
