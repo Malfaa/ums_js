@@ -3,8 +3,7 @@ import * as api from "/src/js/apiservice.js";
 
 //Login Screen
 
-const logarGoogle = document.getElementById("google-log");
-
+const botaoGoogle = document.getElementsByClassName("google");
 
 
 //Users Screen
@@ -35,8 +34,9 @@ function fecharJanela() {
 
 //Eventos
 
-logarGoogle.addEventListener("click", api.googleAuth);
-
+for (let i = 0; i < botaoGoogle.length; i++) {
+  botaoGoogle[i].addEventListener("click", api.googleAuth());
+};
 adicionarBotao.addEventListener("click", adicionarScreen);
 adicionarUser.addEventListener("click", api.adicionarUser(getUser, getMatricula));
 repositorio.atualizarBotao.addEventListener(

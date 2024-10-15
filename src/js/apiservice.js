@@ -1,6 +1,11 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";//'firebase/app'
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";//"firebase/auth";
-import { getFirestore, collection, doc } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";//"firebase/firestore";
+/*import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js"; //'firebase/app'
+import {
+  getAuth,
+  onAuthStateChanged,
+  signInWithPopup,
+  GoogleAuthProvider,
+} from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js"; //"firebase/auth";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js"; //"firebase/firestore";
 
 //https://firebase.google.com/docs/firestore/quickstart?hl=pt-br
 
@@ -11,8 +16,8 @@ import { getFirestore, collection, doc } from "https://www.gstatic.com/firebasej
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
 
-    */
-   
+    
+
 //TODO verificar firebase
 
 const firebaseConfig = initializeApp({
@@ -26,20 +31,26 @@ const firebaseConfig = initializeApp({
 });
 
 const auth = getAuth(firebaseConfig);
-const googleProvider = auth.GoogleAuthProvider();
+const googleProvider = new GoogleAuthProvider();
 const db = getFirestore(firebaseConfig);
-
 
 //index.html
 
-export function googleAuth(){
-  auth().signInWithPopup(googleProvider)
+export function googleAuth() {
+  signInWithPopup(auth, googleProvider)
     .then((result) => {
-        const user = result.user;
-        console.log("Usuário autenticado:", user);
+      // IdP data available using getAdditionalUserInfo(result)
+      const user = result.user;
+      console.log("Usuário autenticado:", user);
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const credential = googleProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      // The signed-in user info.
+
+      // ...
     })
     .catch((error) => {
-        console.error("Erro ao fazer login:", error);
+      console.error("Erro ao fazer login:", error);
     });
 }
 
@@ -54,51 +65,62 @@ export function googleAuth(){
     if let user = user {
       // ...
     }
-  }*/
+  }
 
-  onAuthStateChanged(auth, (user) => {
-    if (user !== null) {
-      console.log("logged in");
-    } else {
-      console.log("no user");
-    }
-  });
+onAuthStateChanged(auth, (user) => {
+  if (user !== null) {
+    console.log("logged in");
+  } else {
+    console.log("no user");
+  }
+});
 
 //Users.html
-export async function adicionarUser(userId, nome, matricula){
-  await db.collection("users").add({
-    nome: nome,
-    matricula: matricula
-  }).then(()=>{
-    console.log("Aidionado com sucesso");
-  }).catch(()=>{
-    console.error("Erro ao adicionar: ", error);
-  });
+export async function adicionarUser(userId, nome, matricula) {
+  await db
+    .collection("users")
+    .add({
+      nome: nome,
+      matricula: matricula,
+    })
+    .then(() => {
+      console.log("Aidionado com sucesso");
+    })
+    .catch(() => {
+      console.error("Erro ao adicionar: ", error);
+    });
 }
 
-function removerUser(userId, nome, matricula){
+function removerUser(userId, nome, matricula) {
   //db.collection("users").doc(userId).deleteDoc()
 }
 
-function atualizarBanco(/*userId*/){
-  db.collection("users").doc().get()
-  .then((doc) => {
-    if (doc.exists) {
+function atualizarBanco(/*userId) {
+  db.collection("users")
+    .doc()
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
         console.log("Dados do usuário:", doc.data());
-    } else {
+      } else {
         console.log("Nenhum usuário encontrado!");
-    }
-})
-.catch((error) => {
-    console.error("Erro ao obter usuário: ", error);
-})};
+      }
+    })
+    .catch((error) => {
+      console.error("Erro ao obter usuário: ", error);
+    });
+}
 
 function updateUser(userId, newData) {
-  db.collection("users").doc(userId).update(newData)
-  .then(() => {
+  db.collection("users")
+    .doc(userId)
+    .update(newData)
+    .then(() => {
       console.log("Usuário atualizado com sucesso!");
-  })
-  .catch((error) => {
+    })
+    .catch((error) => {
       console.error("Erro ao atualizar usuário: ", error);
-  });
+    });
 }
+*/
+
