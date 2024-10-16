@@ -3,7 +3,6 @@ export const atualizarBotao = document.getElementById('atualizar-tela');
 
 export function atualizarBanco(){
     console.log("Atualizando banco online")
-    //TODO fetch banco de dados 
 }
 
 // Teste de fetch p/ lista

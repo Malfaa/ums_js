@@ -1,4 +1,4 @@
-/*import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js"; //'firebase/app'
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js"; //'firebase/app'
 import {
   getAuth,
   onAuthStateChanged,
@@ -8,17 +8,6 @@ import {
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js"; //"firebase/firestore";
 
 //https://firebase.google.com/docs/firestore/quickstart?hl=pt-br
-
-/*
-
-    //Import the functions you need from the SDKs you need
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-analytics.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-
-    
-
-//TODO verificar firebase
 
 const firebaseConfig = initializeApp({
   apiKey: "AIzaSyBO18BnszU-Bv99DMa9keDx_0kEL65q6kk",
@@ -32,7 +21,7 @@ const firebaseConfig = initializeApp({
 
 const auth = getAuth(firebaseConfig);
 const googleProvider = new GoogleAuthProvider();
-const db = getFirestore(firebaseConfig);
+export const db = getFirestore(firebaseConfig);
 
 //index.html
 
@@ -54,19 +43,6 @@ export function googleAuth() {
     });
 }
 
-/*auth().addStateDidChangeListener { (auth, user) in
-    if let user = user {
-      let email = user.email
-      // ...
-    }
-  }
-
-  auth().signIn(withEmail: userEmail, password: password) { (user, error) in
-    if let user = user {
-      // ...
-    }
-  }
-
 onAuthStateChanged(auth, (user) => {
   if (user !== null) {
     console.log("logged in");
@@ -77,50 +53,46 @@ onAuthStateChanged(auth, (user) => {
 
 //Users.html
 export async function adicionarUser(userId, nome, matricula) {
-  await db
-    .collection("users")
-    .add({
+  try {
+    await db.collection("users").add({
       nome: nome,
       matricula: matricula,
-    })
-    .then(() => {
-      console.log("Aidionado com sucesso");
-    })
-    .catch(() => {
-      console.error("Erro ao adicionar: ", error);
     });
+    console.log("Aidionado com sucesso");
+  } catch (error) {
+    console.error("Erro ao adicionar: ", error);
+  }
 }
 
-function removerUser(userId, nome, matricula) {
+export function removerUser(userId, nome, matricula) {
   //db.collection("users").doc(userId).deleteDoc()
 }
 
-function atualizarBanco(/*userId) {
-  db.collection("users")
-    .doc()
-    .get()
-    .then((doc) => {
-      if (doc.exists) {
-        console.log("Dados do usuário:", doc.data());
-      } else {
-        console.log("Nenhum usuário encontrado!");
-      }
-    })
-    .catch((error) => {
-      console.error("Erro ao obter usuário: ", error);
-    });
+export function atualizarBanco() {
+  /*
+  TODO db.collection
+   está dizendo que não é uma function, provavelmente
+   é pq ele está atualizando ou chamando a função que está
+   vazia
+*/
+  try {
+    db.collection("users").doc().get();
+    console.log("Atualizando banco online");
+    if (doc.exists) {
+      console.log("Dados do usuário:", doc.data());
+    } else {
+      console.log("Nenhum usuário encontrado!");
+    }
+  } catch (error) {
+    console.error("Erro ao obter usuário: ", error);
+  }
 }
 
 function updateUser(userId, newData) {
-  db.collection("users")
-    .doc(userId)
-    .update(newData)
-    .then(() => {
-      console.log("Usuário atualizado com sucesso!");
-    })
-    .catch((error) => {
-      console.error("Erro ao atualizar usuário: ", error);
-    });
+  try {
+    db.collection("users").doc(userId).update(newData);
+    console.log("Usuário atualizado com sucesso!");
+  } catch (error) {
+    console.error("Erro ao atualizar usuário: ", error);
+  }
 }
-*/
-

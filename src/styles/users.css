@@ -77,6 +77,21 @@ header {
   background-color: #235061;
 }
 
+li.item-da-lista {
+  display: flex;
+  width: 305px;
+  height: 100px;
+  min-width: 300px;
+  max-width: 310px;
+  min-height: 100px;
+  max-height: 100px;
+  padding: 0px 5px;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  background: rgba(220, 220, 220, 0.2);
+}
+
 .lista-de-users {
   list-style-type: none;
   display: flex;
@@ -90,7 +105,6 @@ header {
 /* Adicionar */
 
 #adicionar-popup {
-  display: none;
   position: relative;
   flex-direction: column;
   align-items: center;
@@ -319,6 +333,10 @@ e assim pode fazer a pesquisa
     width: 100%;
     height: 60px;
     background-color: #d0cfff;
+  }
+
+  .botoes-input:hover {
+    background-color: #b1b1c5;
   }
 
   .botoes-input#adicionar p,
