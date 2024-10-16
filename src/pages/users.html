@@ -68,18 +68,28 @@
             </button>
           </section>
           <section class="secao-lista-users">
-            <ul class="lista-de-users">
-            </ul>
+            <ul class="lista-de-users"></ul>
           </section>
         </section>
       </section>
-      <div id="adicionar-popup" style="display: none;">
+      <div id="adicionar-popup" style="display: none">
         <button type="button" class="fechar-janela" id="fechar"></button>
-          <div class="adicionar-header">       
-             <img src="/src/res/images/add_user.svg" alt="Adicionar Usuário" width="40px" height="40px">
-             <h2>Adicionar Usuário</h2>
-          </div>
-        <input type="text" name="nome" class="campo-texto" placeholder="Nome" id="campo-nome" />
+        <div class="adicionar-header">
+          <img
+            src="/src/res/images/add_user.svg"
+            alt="Adicionar Usuário"
+            width="40px"
+            height="40px"
+          />
+          <h2>Adicionar Usuário</h2>
+        </div>
+        <input
+          type="text"
+          name="nome"
+          class="campo-texto"
+          placeholder="Nome"
+          id="campo-nome"
+        />
         <input
           type="number"
           name="matricula"
@@ -87,8 +97,22 @@
           placeholder="Matricula"
           id="campo-matricula"
         />
-        <button type="button" class="botao-adicionar" id="adicionar"><p>Adicionar</p></button>
+        <button type="button" class="botao-adicionar" id="adicionar">
+          <p>Adicionar</p>
+        </button>
       </div>
+
+      <!-- <div class="item-da-lista">
+        <div class="item-nome-matricula">
+          <p id="nome">Nome: ${element.nome}</p>
+          <p id="matricula">Matrícula: ${element.matricula}</p>
+        </div>
+        <button class="config">
+          <img src="/src/res/images/config_button.svg" 
+          alt="Configuração" 
+          title="Configuração">
+        </button>
+      </div> -->
     </main>
     <footer>© 2024 GMalfa - Todos os direitos reservados</footer>
     <script type="module" src="/src/js/users.js" defer></script>

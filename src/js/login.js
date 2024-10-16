@@ -6,6 +6,9 @@ for (let i = 0; i < botaoGoogle.length; i++) {
   botaoGoogle[i].addEventListener("click", api.googleAuth);
 };
 
+//TODO assim que confirmar logged in já passar para a tela users
+//TODO verificar assim que logado ir direto para users
+
 // auth.addStateDidChangeListener { (auth, user) in
 //     if let user = user {
 //       let email = user.email

@@ -53,14 +53,14 @@ header {
   border-radius: 12px;
 }
 
-.botoes-input#adicionar {
+.botoes-input#adicionar-tela {
   background-image: url("/src/res/images/adicionar_bttn.svg"); /* Imagem de fundo */
 }
-.botoes-input#adicionar p,
-.botoes-input#atualizar p {
+.botoes-input#adicionar-tela p,
+.botoes-input#atualizar-tela p {
   visibility: hidden;
 }
-.botoes-input#atualizar {
+.botoes-input#atualizar-tela {
   background-image: url("/src/res/images/refresh_button.svg"); /* Imagem de fundo */
 }
 
@@ -77,7 +77,7 @@ header {
   background-color: #235061;
 }
 
-li.item-da-lista {
+.item-da-lista {
   display: flex;
   width: 305px;
   height: 100px;
@@ -90,6 +90,35 @@ li.item-da-lista {
   gap: 10px;
   border: 1px solid rgba(0, 0, 0, 0.4);
   background: rgba(220, 220, 220, 0.2);
+}
+
+.item-nome-matricula {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 15px;
+  flex: 1 0 0;
+  align-self: stretch;
+}
+
+.item-nome-matricula p {
+  color: #000;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  align-self: stretch;
+}
+
+.config {
+  fill: rgba(144, 144, 144, 0.5);
+  stroke-width: 1px;
+  stroke: rgba(0, 0, 0, 0.4);
+  opacity: 0.5;
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
 }
 
 .lista-de-users {

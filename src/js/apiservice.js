@@ -5,7 +5,14 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
 } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js"; //"firebase/auth";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js"; //"firebase/firestore";
+import {
+  getFirestore,
+  addDoc,
+  getDoc,
+  getDocs,
+  doc,
+  collection,
+} from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js"; //"firebase/firestore";
 
 //https://firebase.google.com/docs/firestore/quickstart?hl=pt-br
 
@@ -52,40 +59,47 @@ onAuthStateChanged(auth, (user) => {
 });
 
 //Users.html
-export async function adicionarUser(userId, nome, matricula) {
+export async function adicionarUser(nome, matricula) {
   try {
-    await db.collection("users").add({
+    const docRef = await addDoc(collection(db, "users"), {
       nome: nome,
       matricula: matricula,
     });
-    console.log("Aidionado com sucesso");
+    console.log("Aidionado com sucesso", docRef.id);
   } catch (error) {
-    console.error("Erro ao adicionar: ", error);
+    console.log("Erro ao adicionar: ", error);
   }
 }
 
-export function removerUser(userId, nome, matricula) {
-  //db.collection("users").doc(userId).deleteDoc()
+export async function removerUser(userId) {
+  try {
+    const docRef = doc(db, "users", userId);
+    await deleteDoc(docRef);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
-export function atualizarBanco() {
-  /*
-  TODO db.collection
-   está dizendo que não é uma function, provavelmente
-   é pq ele está atualizando ou chamando a função que está
-   vazia
-*/
+export async function atualizarBanco() {
   try {
-    db.collection("users").doc().get();
+    const docRef = collection(db, "users");
+    console.log(getDocs(docRef));
+    await getDocs(docRef);
     console.log("Atualizando banco online");
-    if (doc.exists) {
-      console.log("Dados do usuário:", doc.data());
+    if (docRef) {
+      console.log("Dados do usuário:", docRef.data);
     } else {
       console.log("Nenhum usuário encontrado!");
     }
   } catch (error) {
-    console.error("Erro ao obter usuário: ", error);
+    console.log("Erro ao obter usuário: ", error);
   }
+}
+
+export async function getUser(userId){
+  // Wm3ANj9PbghW1IbVkp7k
+  const userRef = collection(db, "users", userId);
+  await getDoc(userRef);
 }
 
 function updateUser(userId, newData) {
