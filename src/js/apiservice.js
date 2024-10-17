@@ -83,11 +83,15 @@ export async function removerUser(userId) {
 export async function atualizarBanco() {
   try {
     const docRef = collection(db, "users");
-    console.log(getDocs(docRef));
-    await getDocs(docRef);
+    const querySnapshot = await getDocs(docRef); 
+
     console.log("Atualizando banco online");
-    if (docRef) {
-      console.log("Dados do usuário:", docRef.data);
+
+    if (!querySnapshot.empty) {
+      // verifique se a coleção não está vazia
+      querySnapshot.forEach((doc) => {
+        console.log("Dados do usuário:", doc.data());
+      });
     } else {
       console.log("Nenhum usuário encontrado!");
     }
@@ -96,7 +100,7 @@ export async function atualizarBanco() {
   }
 }
 
-export async function getUser(userId){
+export async function getUser(userId) {
   // Wm3ANj9PbghW1IbVkp7k
   const userRef = collection(db, "users", userId);
   await getDoc(userRef);
