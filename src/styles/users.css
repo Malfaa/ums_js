@@ -220,8 +220,8 @@ header {
   background-position: center;
   border-radius: 100%;
   border: none;
-  width: 40px;
-  height: 40px;
+  width: 56px;
+  height: 56px;
 }
 
 @media (max-width: 575px) and (orientation: landscape) {
@@ -368,15 +368,15 @@ e assim pode fazer a pesquisa
     background-color: #b1b1c5;
   }
 
-  .botoes-input#adicionar p,
-  .botoes-input#atualizar p {
+  .botoes-input#adicionar-tela p,
+  .botoes-input#atualizar-tela p {
     visibility: visible;
   }
 
-  .botoes-input#adicionar {
+  .botoes-input#adicionar-tela {
     background-image: none;
   }
-  .botoes-input#atualizar {
+  .botoes-input#atualizar-tela {
     background-image: none;
   }
 

@@ -1,11 +1,11 @@
-import * as api from "/src/js/apiservice.js";
+import { atualizarBanco, adicionarUser } from "/src/js/apiservice.js";
 
 const adicionarPopup = document.querySelector("#adicionar-popup");
 const adicionarBotao = document.getElementById("adicionar-tela");
 const fecharJanelaBotao = document.getElementById("fechar");
 const getUser = document.getElementById("campo-nome");
 const getMatricula = document.getElementById("campo-matricula");
-const adicionarUser = document.getElementById("adicionar");
+const confirmarAdicionar = document.getElementById("adicionar");
 const atualizarBotao = document.getElementById("atualizar-tela");
 const lista = document.getElementById("lista-de-users");
 const listaStyle = document.querySelector("li.item-da-lista");
@@ -29,10 +29,9 @@ if (adicionarBotao) {
   adicionarBotao.addEventListener("click", adicionarScreen);
 }
 
-if (adicionarUser) {
-  adicionarUser.addEventListener("click", () =>
-    api
-      .adicionarUser(getUser.value, getMatricula.value)
+if (confirmarAdicionar) {
+  confirmarAdicionar.addEventListener("click", () =>
+    adicionarUser(getUser.value, getMatricula.value)
       .then(() => {
         fecharJanela;
       })
@@ -43,21 +42,27 @@ if (adicionarUser) {
 }
 
 if (atualizarBotao) {
-  atualizarBotao.addEventListener("click", api.atualizarBanco);
+  atualizarBotao.addEventListener("click", atualizarBanco);
 }
 
 if (fecharJanelaBotao) {
   fecharJanelaBotao.addEventListener("click", fecharJanela);
 }
 
-if (lista) {
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("Documento carregado");
+  reload();
+});
+
+//--------------------------------------------
+async function reload() {
   try {
-    api
-      .collection(db, "users")
-      .doc
-      .forEach((element) => {
-        const li = document.createElement("li");
-        li.innerHTML = `
+    console.log("Reload abriu");
+    const atualizar = atualizarBanco(); //TODO fazer com que o atualizarBanco retorne um objeto ou um array
+    console.log(typeof(atualizar));
+    atualizar.forEach((element) => {
+      const li = document.createElement("li");
+      li.innerHTML = `
       <div class="item-da-lista">
         <div class="item-nome-matricula">
           <p id="nome">Nome: ${element.nome}</p>
@@ -70,16 +75,18 @@ if (lista) {
         </button>
       </div>
       `;
-        //li.style = listaStyle;
-        lista.appendChild(li);
-      });
+      //li.style = listaStyle;
+      lista.appendChild(li);
+      console.log("|Busca feita!")
+    });
   } catch (error) {
     console.log(error);
   }
+}
 
-  if (configButton) {
-    // getUserId para poder editar ou remover
-  }
+
+if (configButton) {
+  // getUserId para poder editar ou remover
 }
 
 // https://firebase.google.com/docs/firestore/query-data/get-data?hl=pt-br#get_all_documents_in_a_collection

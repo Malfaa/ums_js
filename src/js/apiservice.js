@@ -39,8 +39,8 @@ export function googleAuth() {
       const user = result.user;
       console.log("Usuário autenticado:", user);
       // This gives you a Google Access Token. You can use it to access the Google API.
-      const credential = googleProvider.credentialFromResult(result);
-      const token = credential.accessToken;
+      //const credential = googleProvider.credentialFromResult(result);
+      //const token = credential.accessToken;
       // The signed-in user info.
 
       // ...
@@ -83,18 +83,19 @@ export async function removerUser(userId) {
 export async function atualizarBanco() {
   try {
     const docRef = collection(db, "users");
-    const querySnapshot = await getDocs(docRef); 
+    const querySnapshot = await getDocs(docRef);//objeto
 
     console.log("Atualizando banco online");
 
     if (!querySnapshot.empty) {
-      // verifique se a coleção não está vazia
       querySnapshot.forEach((doc) => {
-        console.log("Dados do usuário:", doc.data());
+        console.log("Dados do usuário:", doc.data()); //TODO investigar esse forEach com objeto e um array... em teoria o dados usuários é um obj ao invés de array,
+        //mas o forEach funfa nele
       });
     } else {
       console.log("Nenhum usuário encontrado!");
-    }
+    } 
+    return querySnapshot;
   } catch (error) {
     console.log("Erro ao obter usuário: ", error);
   }
@@ -103,7 +104,7 @@ export async function atualizarBanco() {
 export async function getUser(userId) {
   // Wm3ANj9PbghW1IbVkp7k
   const userRef = collection(db, "users", userId);
-  await getDoc(userRef);
+  const getUser = await getDoc(userRef);
 }
 
 function updateUser(userId, newData) {
