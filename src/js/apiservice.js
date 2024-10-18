@@ -88,14 +88,16 @@ export async function atualizarBanco() {
     console.log("Atualizando banco online");
 
     if (!querySnapshot.empty) {
+      const users = [];
       querySnapshot.forEach((doc) => {
-        console.log("Dados do usuário:", doc.data()); //TODO investigar esse forEach com objeto e um array... em teoria o dados usuários é um obj ao invés de array,
-        //mas o forEach funfa nele
+        console.log("Dados do usuário:", doc.data());
+        users.push({...doc.data()});
       });
+
+      return users;
     } else {
       console.log("Nenhum usuário encontrado!");
     } 
-    return querySnapshot;
   } catch (error) {
     console.log("Erro ao obter usuário: ", error);
   }

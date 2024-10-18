@@ -65,7 +65,7 @@ header {
 }
 
 .secao-lista-users {
-  width: 100%;
+  width: 90vw;
   overflow: scroll;
   scroll-behavior: smooth;
   overflow-x: hidden;
@@ -79,10 +79,9 @@ header {
 
 .item-da-lista {
   display: flex;
-  width: 305px;
+  width: 50%;
   height: 100px;
   min-width: 300px;
-  max-width: 310px;
   min-height: 100px;
   max-height: 100px;
   padding: 0px 5px;
@@ -119,9 +118,13 @@ header {
   width: 56px;
   height: 56px;
   flex-shrink: 0;
+  border-radius: 5px;
+  background-image: url("/src/res/images/config_button.svg");
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-.lista-de-users {
+#lista-de-users {
   list-style-type: none;
   display: flex;
   flex-direction: column;
@@ -380,7 +383,7 @@ e assim pode fazer a pesquisa
     background-image: none;
   }
 
-  .lista-de-users {
+  #lista-de-users {
     list-style-type: none;
     display: flex;
     flex-direction: column;

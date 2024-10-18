@@ -8,7 +8,7 @@ const getMatricula = document.getElementById("campo-matricula");
 const confirmarAdicionar = document.getElementById("adicionar");
 const atualizarBotao = document.getElementById("atualizar-tela");
 const lista = document.getElementById("lista-de-users");
-const listaStyle = document.querySelector("li.item-da-lista");
+const itemDaLista = document.querySelector(".item-da-lista");
 const configButton = document.getElementsByClassName("config");
 
 function adicionarScreen() {
@@ -42,7 +42,7 @@ if (confirmarAdicionar) {
 }
 
 if (atualizarBotao) {
-  atualizarBotao.addEventListener("click", atualizarBanco);
+  atualizarBotao.addEventListener("click", carregarLista);
 }
 
 if (fecharJanelaBotao) {
@@ -51,33 +51,28 @@ if (fecharJanelaBotao) {
 
 document.addEventListener("DOMContentLoaded", () => {
   console.log("Documento carregado");
-  reload();
+  //reload();
 });
 
 //--------------------------------------------
-async function reload() {
+async function carregarLista() { //TODO talvez persistir os dados da última atualização, assim, evitando de fazer uma leitura todo momento
   try {
-    console.log("Reload abriu");
-    const atualizar = atualizarBanco(); //TODO fazer com que o atualizarBanco retorne um objeto ou um array
+    const atualizar = await atualizarBanco();
     console.log(typeof(atualizar));
-    atualizar.forEach((element) => {
+    atualizar.forEach((doc) => {
       const li = document.createElement("li");
       li.innerHTML = `
       <div class="item-da-lista">
         <div class="item-nome-matricula">
-          <p id="nome">Nome: ${element.nome}</p>
-          <p id="matricula">Matrícula: ${element.matricula}</p>
+          <p id="nome">Nome: ${doc.nome}</p>
+          <p id="matricula">Matrícula: ${doc.matricula}</p>
         </div>
-        <button class="config" id= ${element.id}>
-          <img src="/src/res/images/config_button.svg" 
-          alt="Configuração" 
-          title="Configuração">
+        <button class="config" id= ${doc.id} title="Configuração">
         </button>
-      </div>
+        </div>
       `;
-      //li.style = listaStyle;
       lista.appendChild(li);
-      console.log("|Busca feita!")
+      console.log("Busca feita!")
     });
   } catch (error) {
     console.log(error);
