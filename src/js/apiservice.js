@@ -50,11 +50,15 @@ export function googleAuth() {
     });
 }
 
+export let autenticado;
+
 onAuthStateChanged(auth, (user) => {
   if (user !== null) {
     console.log("logged in");
+    autenticado = true;
   } else {
     console.log("no user");
+    autenticado = false;
   }
 });
 
