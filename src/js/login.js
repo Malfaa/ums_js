@@ -1,15 +1,19 @@
-import {autenticado,googleAuth} from "/src/js/apiservice.js";
+import { verificarAutenticacao, googleAuth } from "/src/js/apiservice.js";
 
 const botaoGoogle = document.getElementsByClassName("google");
 
 for (let i = 0; i < botaoGoogle.length; i++) {
   botaoGoogle[i].addEventListener("click", googleAuth);
-};
+}
 
 document.addEventListener("DOMContentLoaded", () => {
-  if (autenticado !== null) {
-    window.location.href = "/src/pages/users.html";
-  }
+  verificarAutenticacao((autenticado) => {//autenticado é um boolean da função callback
+    if (autenticado) {
+      window.location.href = "/src/pages/users.html";
+    } else {
+      console.log("Usuário não autenticado.");
+    }
+  });
 });
 
 // auth.addStateDidChangeListener { (auth, user) in

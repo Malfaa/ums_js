@@ -50,17 +50,17 @@ export function googleAuth() {
     });
 }
 
-export let autenticado;
-
-onAuthStateChanged(auth, (user) => {
-  if (user !== null) {
-    console.log("logged in");
-    autenticado = true;
-  } else {
-    console.log("no user");
-    autenticado = false;
-  }
-});
+export function verificarAutenticacao(callback/*este parâmetro é uma função*/) {
+  onAuthStateChanged(auth, (user) => {
+    if (user !== null) {
+      console.log("logged in");
+      callback(true);
+    } else {
+      console.log("no user");
+      callback(false);
+    }
+  });
+}
 
 //Users.html
 export async function adicionarUser(nome, matricula) {

@@ -34,7 +34,7 @@ if (confirmarAdicionar) {
     adicionarUser(getUser.value, getMatricula.value)
       .then(() => {
         fecharJanela();
-        carregarLista();
+        firebaseParaLocalStorage();
       })
       .catch((err) => {
         console.log(err);
@@ -43,7 +43,7 @@ if (confirmarAdicionar) {
 }
 
 if (atualizarBotao) {
-  atualizarBotao.addEventListener("click", carregarLista);
+  atualizarBotao.addEventListener("click", firebaseParaLocalStorage);
 }
 
 if (fecharJanelaBotao) {
@@ -54,16 +54,66 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("Documento carregado");
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  cache();
+});
+
 //--------------------------------------------
-async function carregarLista() {
-  //TODO talvez persistir os dados da última atualização, assim, evitando de fazer uma leitura todo momento
+async function firebaseParaLocalStorage() {
+  //TODO modularizar esse innerHtml  carregarLista
+  // try {
+  const atualizar = await atualizarBanco();
+  atualizar.forEach((doc) => {
+    localStorage.setItem("users", JSON.stringify(doc));
+  });
+  console.log(typeof atualizar);
+
+  cache();
+
+  //   lista.innerHTML = "";
+  //   atualizar.forEach((doc) => {
+  //     const li = document.createElement("li");
+  //     li.innerHTML = `
+  //     <div class="item-da-lista">
+  //       <div class="item-nome-matricula">
+  //         <p id="nome">Nome: ${doc.nome}</p>
+  //         <p id="matricula">Matrícula: ${doc.matricula}</p>
+  //       </div>
+  //       <button type="button" id="button-config" title="Configuração">
+  //       </button>
+  //       <div id="config-menu" style="display: none;">
+  //         <nav class="menu">
+  //           <ul style="display: flex; width: 100%; text-align: center; flex-direction: column; flex-wrap: nowrap;">
+  //             <li class="menu-item">Editar</li>
+  //             <li class="menu-item">Apagar</li>
+  //           </ul>
+  //         </nav>
+  //       </div>
+
+  //     </div>
+  //     `;
+  //     lista.appendChild(li);
+  //     console.log("Busca feita!");
+
+  //     configToMenu = document.querySelector("#config-menu");
+  //     const configuracaoBotao = li.querySelector("#button-config");
+
+  //     if (configuracaoBotao) { //TODO colocar um forEach, para cada doc
+  //       configuracaoBotao.addEventListener("click", configuracao); //(doc.id)
+  //     }
+  //   });
+  // } catch (error) {
+  //   console.log(error);
+  // }
+}
+
+function cache() {
   try {
-    const atualizar = await atualizarBanco();
-    console.log(typeof atualizar);
     lista.innerHTML = "";
-    atualizar.forEach((doc) => {
-      const li = document.createElement("li");
-      li.innerHTML = `
+    JSON.parse( //TODO fix   corrigir aqui o código
+      localStorage.getItem("users").forEach((doc) => {
+        const li = document.createElement("li");
+        li.innerHTML = `
       <div class="item-da-lista">
         <div class="item-nome-matricula">
           <p id="nome">Nome: ${doc.nome}</p>
@@ -82,16 +132,17 @@ async function carregarLista() {
       
       </div>
       `;
-      lista.appendChild(li);
-      console.log("Busca feita!");
+        lista.appendChild(li);
+        console.log("Retrive feito!");
+      })
+    );
+    configToMenu = document.querySelector("#config-menu");
+    const configuracaoBotao = li.querySelector("#button-config");
 
-      configToMenu = document.querySelector("#config-menu");
-      const configuracaoBotao = li.querySelector("#button-config");
-
-      if (configuracaoBotao) { //TODO colocar um forEach, para cada doc
-        configuracaoBotao.addEventListener("click", configuracao); //(doc.id)
-      }
-    });
+    if (configuracaoBotao) {
+      //TODO colocar um forEach, para cada doc
+      configuracaoBotao.addEventListener("click", configuracao); //(doc.id)
+    }
   } catch (error) {
     console.log(error);
   }
