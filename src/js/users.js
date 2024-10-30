@@ -9,7 +9,7 @@ const confirmarAdicionar = document.getElementById("adicionar");
 const atualizarBotao = document.getElementById("atualizar-tela");
 const lista = document.getElementById("lista-de-users");
 const configuracaoBotao = document.getElementById("button-config");
-let configToMenu;
+const configToMenu = document.getElementsByClassName("config-menu");
 
 function adicionarScreen() {
   if (adicionarPopup) {
@@ -60,98 +60,67 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //--------------------------------------------
 async function firebaseParaLocalStorage() {
-  //TODO modularizar esse innerHtml  carregarLista
-  // try {
-  const atualizar = await atualizarBanco();
-  atualizar.forEach((doc) => {
-    localStorage.setItem("users", JSON.stringify(doc));
-  });
-  console.log(typeof atualizar);
-
-  cache();
-
-  //   lista.innerHTML = "";
-  //   atualizar.forEach((doc) => {
-  //     const li = document.createElement("li");
-  //     li.innerHTML = `
-  //     <div class="item-da-lista">
-  //       <div class="item-nome-matricula">
-  //         <p id="nome">Nome: ${doc.nome}</p>
-  //         <p id="matricula">Matrícula: ${doc.matricula}</p>
-  //       </div>
-  //       <button type="button" id="button-config" title="Configuração">
-  //       </button>
-  //       <div id="config-menu" style="display: none;">
-  //         <nav class="menu">
-  //           <ul style="display: flex; width: 100%; text-align: center; flex-direction: column; flex-wrap: nowrap;">
-  //             <li class="menu-item">Editar</li>
-  //             <li class="menu-item">Apagar</li>
-  //           </ul>
-  //         </nav>
-  //       </div>
-
-  //     </div>
-  //     `;
-  //     lista.appendChild(li);
-  //     console.log("Busca feita!");
-
-  //     configToMenu = document.querySelector("#config-menu");
-  //     const configuracaoBotao = li.querySelector("#button-config");
-
-  //     if (configuracaoBotao) { //TODO colocar um forEach, para cada doc
-  //       configuracaoBotao.addEventListener("click", configuracao); //(doc.id)
-  //     }
-  //   });
-  // } catch (error) {
-  //   console.log(error);
-  // }
-}
-
-function cache() {
   try {
-    lista.innerHTML = "";
-    JSON.parse( //TODO fix   corrigir aqui o código
-      localStorage.getItem("users").forEach((doc) => {
-        const li = document.createElement("li");
-        li.innerHTML = `
-      <div class="item-da-lista">
-        <div class="item-nome-matricula">
-          <p id="nome">Nome: ${doc.nome}</p>
-          <p id="matricula">Matrícula: ${doc.matricula}</p>
-        </div>
-        <button type="button" id="button-config" title="Configuração">
-        </button>
-        <div id="config-menu" style="display: none;">
-          <nav class="menu"> 
-            <ul style="display: flex; width: 100%; text-align: center; flex-direction: column; flex-wrap: nowrap;">
-              <li class="menu-item">Editar</li>
-              <li class="menu-item">Apagar</li>
-            </ul>
-          </nav>
-        </div>
-      
-      </div>
-      `;
-        lista.appendChild(li);
-        console.log("Retrive feito!");
-      })
-    );
-    configToMenu = document.querySelector("#config-menu");
-    const configuracaoBotao = li.querySelector("#button-config");
-
-    if (configuracaoBotao) {
-      //TODO colocar um forEach, para cada doc
-      configuracaoBotao.addEventListener("click", configuracao); //(doc.id)
-    }
+    const atualizar = await atualizarBanco();
+    console.log(localStorage.setItem("users", JSON.stringify(atualizar)));
+    cache();
   } catch (error) {
     console.log(error);
   }
 }
 
-function configuracao() {
-  if (configToMenu) {
-    configToMenu.style.display =
-      configToMenu.style.display === "none" ? "block" : "none";
+function configuracao(id) {  
+  //TODO fix   corrigir esta parte da config para editar e deletar
+
+  // configToMenu.style.display =
+  //   configToMenu.style.display === "none" ? "block" : "none";  
+  configToMenu.classList.toggle("config-menu");
+}
+
+function cache() {
+  try {
+    lista.innerHTML = "";
+
+    const usersString = localStorage.getItem("users");
+    const users = JSON.parse(usersString);
+    console.log(users);
+    if (Array.isArray(users)) {
+      users.forEach((doc) => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+              <div class="item-da-lista">
+                <div class="item-nome-matricula">
+                  <p id="nome">Nome: ${doc.nome}</p>
+                  <p id="matricula">Matrícula: ${doc.matricula}</p>
+                </div>
+                <button type="button" id="button-config" title="Configuração">
+                </button>
+                <div class="config-menu">
+                  <nav class="menu"> 
+                    <ul style="display: flex; width: 100%; text-align: center; flex-direction: column; flex-wrap: nowrap;">
+                      <li class="menu-item">Editar</li>
+                      <li class="menu-item">Apagar</li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            `;
+        lista.appendChild(li);
+        console.log("Retrive feito!");
+
+        const configuracaoBotao = li.querySelector("#button-config");
+        if (configuracaoBotao) {
+          configuracaoBotao.addEventListener("click", () => {
+            configuracao(doc.id);
+            console.log("menu clicado");
+          });
+        }
+      });
+    } else {
+      console.log("Nenhum usuário encontrado ou formato inválido.");
+    }
+  } catch (error) {
+    console.log(error);
   }
 }
 // onclick="configuracao(doc.id)"

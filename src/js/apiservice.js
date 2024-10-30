@@ -90,18 +90,16 @@ export async function atualizarBanco() {
     const querySnapshot = await getDocs(docRef);//objeto
 
     console.log("Atualizando banco online");
-
+    const users = [];
     if (!querySnapshot.empty) {
-      const users = [];
       querySnapshot.forEach((doc) => {
         console.log("Dados do usuário:", doc.data());
         users.push({...doc.data()});
       });
-
-      return users;
     } else {
       console.log("Nenhum usuário encontrado!");
-    } 
+    }       
+    return users;
   } catch (error) {
     console.log("Erro ao obter usuário: ", error);
   }
