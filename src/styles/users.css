@@ -91,6 +91,11 @@ header {
   background: rgba(220, 220, 220, 0.2);
 }
 
+.item-da-lista .toggle{
+  border: 2px solid rgb(129, 250, 129);
+  background-color: rgb(163, 240, 163);
+}
+
 .item-nome-matricula {
   display: flex;
   flex-direction: column;

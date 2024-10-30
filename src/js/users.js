@@ -1,4 +1,8 @@
-import { atualizarBanco, adicionarUser } from "/src/js/apiservice.js";
+import {
+  atualizarBanco,
+  adicionarUser,
+  removerUser,
+} from "/src/js/apiservice.js";
 
 const adicionarPopup = document.querySelector("#adicionar-popup");
 const adicionarBotao = document.getElementById("adicionar-tela");
@@ -8,8 +12,10 @@ const getMatricula = document.getElementById("campo-matricula");
 const confirmarAdicionar = document.getElementById("adicionar");
 const atualizarBotao = document.getElementById("atualizar-tela");
 const lista = document.getElementById("lista-de-users");
-const configuracaoBotao = document.getElementById("button-config");
-const configToMenu = document.getElementsByClassName("config-menu");
+
+let configToMenu;
+let editar;
+let apagar;
 
 function adicionarScreen() {
   if (adicionarPopup) {
@@ -34,7 +40,9 @@ if (confirmarAdicionar) {
     adicionarUser(getUser.value, getMatricula.value)
       .then(() => {
         fecharJanela();
-        firebaseParaLocalStorage();
+        firebaseParaLocalStorage(); 
+        getUser.value = "";
+        getMatricula.value = "";
       })
       .catch((err) => {
         console.log(err);
@@ -59,6 +67,36 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 //--------------------------------------------
+
+function configuracao(id, qntdUsers) { //id = undefined
+  //TODO fix   corrigir esta parte da config para editar e deletar
+
+
+  configToMenu.style.display =
+    configToMenu.style.display === "none" ? "block" : "none";
+
+    console.log(id + " // " + qntdUsers); //TODO colocar o configmenu do lado direito sendo absolute, e quando for clicado em
+    //outro item mas com o menu aberto, ele verifica primeiro o id, se for diferente, mantém aberto porém
+    //troca as infos, se for igual ele fecha o menu, o escondendo (none)
+
+  apagar = document.getElementById("apagar");
+  editar = document.getElementById("editar");
+
+  apagar.addEventListener("click", () => { //bugado, vai para todos dá lista
+    const resultado = window.confirm("Tem certeza que deseja apagar?");
+    if (resultado) {
+      removerUser(id);
+      firebaseParaLocalStorage();
+    } else {
+      console.log("cancelado!");
+    }
+  });
+
+  editar.addEventListener("click", () => {
+    console.log("editar clicado");
+  });
+}
+
 async function firebaseParaLocalStorage() {
   try {
     const atualizar = await atualizarBanco();
@@ -69,21 +107,13 @@ async function firebaseParaLocalStorage() {
   }
 }
 
-function configuracao(id) {  
-  //TODO fix   corrigir esta parte da config para editar e deletar
-
-  // configToMenu.style.display =
-  //   configToMenu.style.display === "none" ? "block" : "none";  
-  configToMenu.classList.toggle("config-menu");
-}
-
 function cache() {
   try {
     lista.innerHTML = "";
 
     const usersString = localStorage.getItem("users");
     const users = JSON.parse(usersString);
-    console.log(users);
+
     if (Array.isArray(users)) {
       users.forEach((doc) => {
         const li = document.createElement("li");
@@ -95,11 +125,11 @@ function cache() {
                 </div>
                 <button type="button" id="button-config" title="Configuração">
                 </button>
-                <div class="config-menu">
+                <div class="config-menu" style="display:none">
                   <nav class="menu"> 
                     <ul style="display: flex; width: 100%; text-align: center; flex-direction: column; flex-wrap: nowrap;">
-                      <li class="menu-item">Editar</li>
-                      <li class="menu-item">Apagar</li>
+                      <li class="menu-item" id="editar">Editar</li>
+                      <li class="menu-item" id="apagar">Apagar</li>
                     </ul>
                   </nav>
                 </div>
@@ -107,13 +137,25 @@ function cache() {
             `;
         lista.appendChild(li);
         console.log("Retrive feito!");
+        console.log(doc);
 
         const configuracaoBotao = li.querySelector("#button-config");
         if (configuracaoBotao) {
-          configuracaoBotao.addEventListener("click", () => {
-            configuracao(doc.id);
-            console.log("menu clicado");
-          });
+
+          for(i = 0; i < lista.length; i++){//TESTE
+
+            configuracaoBotao.addEventListener("click", () => {
+              configToMenu = document.querySelector(".config-menu");
+              configuracao(doc.id, users.length).then(() => {
+                if( ) //pegar o ID e comparar com os índices da lista, caso positivo, toggle de classe
+                // OU TALVEZ NEM PRECISE PQ AQUI JÁ É O DOCUMENTO CORRETO, DAÍ É SÓ
+                //PEGAR O ID, COMPARAR COM OS lista[i].id E TOGGLE DE CLASSE
+                /*classe.*/classList.toggle("item-da-lista .toggle");
+              }); //TODO mudar a cor do ícone selecionado, com isso utiliza-se apenas um block
+              console.log("menu clicado"); 
+            });
+          }
+         
         }
       });
     } else {

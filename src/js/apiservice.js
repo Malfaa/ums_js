@@ -8,6 +8,7 @@ import {
 import {
   getFirestore,
   addDoc,
+  deleteDoc,
   getDoc,
   getDocs,
   doc,
@@ -69,7 +70,6 @@ export async function adicionarUser(nome, matricula) {
       nome: nome,
       matricula: matricula,
     });
-    console.log("Aidionado com sucesso", docRef.id);
   } catch (error) {
     console.log("Erro ao adicionar: ", error);
   }
@@ -94,7 +94,7 @@ export async function atualizarBanco() {
     if (!querySnapshot.empty) {
       querySnapshot.forEach((doc) => {
         console.log("Dados do usuário:", doc.data());
-        users.push({...doc.data()});
+        users.push({ id: doc.id,  ...doc.data()});
       });
     } else {
       console.log("Nenhum usuário encontrado!");
@@ -111,7 +111,7 @@ export async function getUser(userId) {
   const getUser = await getDoc(userRef);
 }
 
-function updateUser(userId, newData) {
+function updateUser(userId, newData) {//TODO alterar usuário
   try {
     db.collection("users").doc(userId).update(newData);
     console.log("Usuário atualizado com sucesso!");
