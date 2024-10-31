@@ -70,7 +70,6 @@ document.addEventListener("DOMContentLoaded", () => {
 //--------------------------------------------
 
 function configuracao(id, qntdUsers) {
-  //TODO fix   corrigir esta parte da config para editar e deletar
 
   apagar = document.getElementById("apagar");
   editar = document.getElementById("editar");
@@ -84,9 +83,7 @@ function configuracao(id, qntdUsers) {
     editar.style.display = "block";
   }
 
-  console.log(id + " // " + qntdUsers); //TODO colocar o configmenu do lado direito sendo absolute, e quando for clicado em
-  //outro item mas com o menu aberto, ele verifica primeiro o id, se for diferente, mantém aberto porém
-  //troca as infos, se for igual ele fecha o menu, o escondendo (none)
+  console.log(id + " // " + qntdUsers);
 
   apagar.addEventListener("click", () => {
     //bugado, vai para todos dá lista
