@@ -16,6 +16,7 @@ const lista = document.getElementById("lista-de-users");
 let configToMenu;
 let editar;
 let apagar;
+let usuariosParaRemover = [];
 
 function adicionarScreen() {
   if (adicionarPopup) {
@@ -40,7 +41,7 @@ if (confirmarAdicionar) {
     adicionarUser(getUser.value, getMatricula.value)
       .then(() => {
         fecharJanela();
-        firebaseParaLocalStorage(); 
+        firebaseParaLocalStorage();
         getUser.value = "";
         getMatricula.value = "";
       })
@@ -68,24 +69,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //--------------------------------------------
 
-function configuracao(id, qntdUsers) { //id = undefined
+function configuracao(id, qntdUsers) {
   //TODO fix   corrigir esta parte da config para editar e deletar
-
-
-  configToMenu.style.display =
-    configToMenu.style.display === "none" ? "block" : "none";
-
-    console.log(id + " // " + qntdUsers); //TODO colocar o configmenu do lado direito sendo absolute, e quando for clicado em
-    //outro item mas com o menu aberto, ele verifica primeiro o id, se for diferente, mantém aberto porém
-    //troca as infos, se for igual ele fecha o menu, o escondendo (none)
 
   apagar = document.getElementById("apagar");
   editar = document.getElementById("editar");
 
-  apagar.addEventListener("click", () => { //bugado, vai para todos dá lista
+  if (usuariosParaRemover.length < 1) {
+    configToMenu.style.display = "none";
+  } else if (usuariosParaRemover.length >= 2) {
+    editar.style.display = "none";
+  } else {
+    configToMenu.style.display = "block";
+    editar.style.display = "block";
+  }
+
+  console.log(id + " // " + qntdUsers); //TODO colocar o configmenu do lado direito sendo absolute, e quando for clicado em
+  //outro item mas com o menu aberto, ele verifica primeiro o id, se for diferente, mantém aberto porém
+  //troca as infos, se for igual ele fecha o menu, o escondendo (none)
+
+  apagar.addEventListener("click", () => {
+    //bugado, vai para todos dá lista
     const resultado = window.confirm("Tem certeza que deseja apagar?");
     if (resultado) {
-      removerUser(id);
+      removerUser(usuariosParaRemover);
       firebaseParaLocalStorage();
     } else {
       console.log("cancelado!");
@@ -113,7 +120,6 @@ function cache() {
 
     const usersString = localStorage.getItem("users");
     const users = JSON.parse(usersString);
-
     if (Array.isArray(users)) {
       users.forEach((doc) => {
         const li = document.createElement("li");
@@ -141,21 +147,23 @@ function cache() {
 
         const configuracaoBotao = li.querySelector("#button-config");
         if (configuracaoBotao) {
+          console.log("passando dentro do for");
+          configuracaoBotao.addEventListener("click", () => {
+            configToMenu = document.querySelector(".config-menu");
+            const itemDaLista = li.querySelector(".item-da-lista");
+            itemDaLista.classList.toggle("toggle");
 
-          for(i = 0; i < lista.length; i++){//TESTE
-
-            configuracaoBotao.addEventListener("click", () => {
-              configToMenu = document.querySelector(".config-menu");
-              configuracao(doc.id, users.length).then(() => {
-                if( ) //pegar o ID e comparar com os índices da lista, caso positivo, toggle de classe
-                // OU TALVEZ NEM PRECISE PQ AQUI JÁ É O DOCUMENTO CORRETO, DAÍ É SÓ
-                //PEGAR O ID, COMPARAR COM OS lista[i].id E TOGGLE DE CLASSE
-                /*classe.*/classList.toggle("item-da-lista .toggle");
-              }); //TODO mudar a cor do ícone selecionado, com isso utiliza-se apenas um block
-              console.log("menu clicado"); 
-            });
-          }
-         
+            if (usuariosParaRemover.includes(doc.id)) {
+              usuariosParaRemover.splice(
+                usuariosParaRemover.indexOf(doc.id),
+                1
+              );
+            } else {
+              usuariosParaRemover.push(doc.id);
+            }
+            configuracao(doc.id, users.length);
+            console.log(usuariosParaRemover);
+          });
         }
       });
     } else {

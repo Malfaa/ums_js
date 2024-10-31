@@ -67,6 +67,7 @@ header {
 .secao-lista-users {
   width: 90vw;
   overflow: scroll;
+  display: relative;
   scroll-behavior: smooth;
   overflow-x: hidden;
   height: 84%;
@@ -91,7 +92,7 @@ header {
   background: rgba(220, 220, 220, 0.2);
 }
 
-.item-da-lista .toggle{
+.item-da-lista.toggle{
   border: 2px solid rgb(129, 250, 129);
   background-color: rgb(163, 240, 163);
 }
@@ -235,6 +236,7 @@ header {
 .config-menu {
   display: none;
   position: absolute;
+  right: 35px;
   width: 160px;
 }
 

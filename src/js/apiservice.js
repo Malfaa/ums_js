@@ -51,7 +51,9 @@ export function googleAuth() {
     });
 }
 
-export function verificarAutenticacao(callback/*este parâmetro é uma função*/) {
+export function verificarAutenticacao(
+  callback /*este parâmetro é uma função*/
+) {
   onAuthStateChanged(auth, (user) => {
     if (user !== null) {
       console.log("logged in");
@@ -77,8 +79,10 @@ export async function adicionarUser(nome, matricula) {
 
 export async function removerUser(userId) {
   try {
-    const docRef = doc(db, "users", userId);
-    await deleteDoc(docRef);
+    for (let i = 0; i < userId.length; i++) {
+      const docRef = doc(db, "users", userId[i]);
+      await deleteDoc(docRef);
+    }
   } catch (error) {
     console.log(error);
   }
@@ -87,18 +91,18 @@ export async function removerUser(userId) {
 export async function atualizarBanco() {
   try {
     const docRef = collection(db, "users");
-    const querySnapshot = await getDocs(docRef);//objeto
+    const querySnapshot = await getDocs(docRef); //objeto
 
     console.log("Atualizando banco online");
     const users = [];
     if (!querySnapshot.empty) {
       querySnapshot.forEach((doc) => {
         console.log("Dados do usuário:", doc.data());
-        users.push({ id: doc.id,  ...doc.data()});
+        users.push({ id: doc.id, ...doc.data() });
       });
     } else {
       console.log("Nenhum usuário encontrado!");
-    }       
+    }
     return users;
   } catch (error) {
     console.log("Erro ao obter usuário: ", error);
@@ -111,7 +115,8 @@ export async function getUser(userId) {
   const getUser = await getDoc(userRef);
 }
 
-function updateUser(userId, newData) {//TODO alterar usuário
+function updateUser(userId, newData) {
+  //TODO alterar usuário
   try {
     db.collection("users").doc(userId).update(newData);
     console.log("Usuário atualizado com sucesso!");
