@@ -4,6 +4,9 @@ import {
   removerUserFirestore,
 } from "/src/js/apiservice.js";
 
+//TODO adicionar  ícone no Adicionar e Atualizar dos browsers.
+//TODO alert p/ quando clicar nas outras abas.
+
 const telaAdicionar = document.querySelector("#tela-adicionar");
 const botaoShowTelaAdicionar = document.getElementById("show-tela-adicionar");
 const botaoFecharJanela = document.getElementById("fechar");
@@ -77,30 +80,77 @@ function getLocalStorage() {
 }
 
 function GeradorDeListaItem(item) {
-  const li = document.createElement("li");
-  li.innerHTML = `
-              <div class="item-da-lista">
-                <div class="item-nome-matricula">
-                  <p id="nome">Nome: ${item.nome}</p>
-                  <p id="matricula">Matrícula: ${item.matricula}</p>
-                </div>
-                <button type="button" id="button-config" title="Configuração">
-                </button>
-                <div class="config-menu" style="display:none">
-                  <nav class="menu"> 
-                    <ul style="display: flex; width: 100%; text-align: center; flex-direction: column; flex-wrap: nowrap;">
-                      <li class="menu-item" id="editar">Editar</li>
-                      <li class="menu-item" id="apagar">Apagar</li>
-                    </ul>
-                  </nav>
-                </div>
-              </div>
-            `;
-  return li;
-}
+  const parent = document.createElement("li");
+  // li.innerHTML = `
+  //             <div class="item-da-lista">
+  //               <div class="item-nome-matricula">
+  //                 <p id="nome">Nome: ${item.nome}</p>
+  //                 <p id="matricula">Matrícula: ${item.matricula}</p>
+  //               </div>
+  //               <button type="button" id="button-config" title="Configuração">
+  //               </button>
+  //               <div class="config-menu" style="display:none">
+  //                 <nav class="menu">
+  //                   <ul style="display: flex; width: 100%; text-align: center; flex-direction: column; flex-wrap: nowrap;">
+  //                     <li class="menu-item" id="editar">Editar</li>
+  //                     <li class="menu-item" id="apagar">Apagar</li>
+  //                   </ul>
+  //                 </nav>
+  //               </div>
+  //             </div>
+  //           `;
 
+  const divPai = document.createElement("div");
+  divPai.className = "item-da-lista";
+  const divItem = document.createElement("div");
+  divItem.className = "item-nome-matricula";
+  const nome = document.createElement("p");
+  nome.id = "nome";
+  nome.textContent = `Nome: ${item.nome}`;
+  const matricula = document.createElement("p");
+  matricula.id = "matricula";
+  matricula.textContent = `Matrícula: ${item.matricula}`;
+  const botaoConfig = document.createElement("button");
+  botaoConfig.title = "Configuração";
+  botaoConfig.className = "button-config";
+  botaoConfig.type = "button";
+
+  parent.appendChild(divPai);
+  divPai.appendChild(divItem);
+  divItem.appendChild(nome);
+  divItem.appendChild(matricula);
+  divPai.appendChild(botaoConfig);
+
+  const configMenu = document.createElement("div");
+  configMenu.id = "config-menu"; configMenu.style.display = "none";
+
+  const nav = document.createElement("nav");
+  nav.id = "menu";
+
+  const ul = document.createElement("ul");
+  ul.className = "ul-de-configuracao";
+  const editar = document.createElement("li");
+  editar.className = "menu-item";
+  const apagar = document.createElement("li");
+  apagar.className = "menu-item";
+
+  parent.appendChild(configMenu);
+  configMenu.appendChild(nav);
+  nav.appendChild(ul);
+  ul.appendChild(editar);
+  ul.appendChild(apagar);
+
+  return parent;
+}
+/*
 function botaoAbreMenuConfiguracao(tag, id, item, usuariosParaAlterar) {
   tag.addEventListener("click", () => {
+    const configToMenu = document.querySelectorAll(".config-menu");
+    const itemDaLista = item.querySelectorAll(".item-da-lista");
+    const apagar = itemDaLista.querySelectorAll("#apagar");
+    const editar = itemDaLista.querySelectorAll("#editar");
+    itemDaLista[id].classList.toggle("selecionado");
+
     const configToMenu = document.querySelector(".config-menu");
     const itemDaLista = item.querySelector(".item-da-lista");
     const apagar = itemDaLista.querySelector("#apagar");
@@ -132,26 +182,50 @@ function botaoAbreMenuConfiguracao(tag, id, item, usuariosParaAlterar) {
       console.log("editar clicado");
     };
   });
-}
+}*/
+
+// function botaoTesteConfiguracao(id, item, usuariosParaAlterar) {
+//   const itemDaLista = item.querySelectorAll(".item-da-lista");
+//   // itemDaLista[id].classList.toggle("selecionado");
+//   console.log(itemDaLista[id])
+// }
 
 function cache() {
   try {
     lista.innerHTML = "";
     let usuariosParaAlterar = [];
-    getLocalStorage().forEach((doc) => {
+    getLocalStorage().forEach((doc, index) => {
+
       const listaItem = GeradorDeListaItem(doc);
+      // GeradorDeListaItem(doc);
+      console.log(listaItem);
       lista.appendChild(listaItem);
       if (usuariosParaAlterar.includes(doc.id)) {
         usuariosParaAlterar.splice(usuariosParaAlterar.indexOf(doc.id), 1);
       } else {
         usuariosParaAlterar.push(doc.id);
       }
-      botaoAbreMenuConfiguracao(
-        document.querySelector("#button-config"),
-        doc.id,
-        listaItem,
-        usuariosParaAlterar
-      );
+
+      const botaoConfigurar = document.querySelectorAll(".button-config");
+      console.log(botaoConfigurar[index]);
+      const itemDaLista = listaItem.querySelectorAll(".item-da-lista");
+
+      botaoConfigurar[index].addEventListener("click", ()=>{ //TODO fix  resolver aqui, aparentemente ele
+        //está pegando só o primeiro item da lista, no caso o i = 0, o resto é como se não existisse
+        //chuto que seja a ordem no código (linearidade), pois não está "renderizando" os outros
+        //indices da lista.
+        console.log("clicado" + index);
+          // botaoTesteConfiguracao(doc.id, listaItem);
+          // itemDaLista[index].classList.toggle("selecionado");
+          console.log(itemDaLista[index]);
+      })
+
+      // botaoAbreMenuConfiguracao(
+      //   document.querySelector("#button-config"),
+      //   doc.id,
+      //   listaItem,
+      //   usuariosParaAlterar
+      // );
       console.log(doc.id);
     });
   } catch (error) {

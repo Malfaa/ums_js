@@ -16,6 +16,9 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+//TODO: fix ao invés de carregar a página e depois carregar a outra, seria melhor deixar a tela em branco um pouco 
+// com  o ícone de loading até carregar a próxima página e assim dar display.
+
 // auth.addStateDidChangeListener { (auth, user) in
 //     if let user = user {
 //       let email = user.email
