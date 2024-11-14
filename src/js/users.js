@@ -1,44 +1,39 @@
 import {
-  atualizarBanco,
-  adicionarUser,
-  removerUser,
+  atualizarUsersFirestore,
+  inserirUserFirestore,
+  removerUserFirestore,
 } from "/src/js/apiservice.js";
 
-const adicionarPopup = document.querySelector("#adicionar-popup");
-const adicionarBotao = document.getElementById("adicionar-tela");
-const fecharJanelaBotao = document.getElementById("fechar");
+const telaAdicionar = document.querySelector("#tela-adicionar");
+const botaoShowTelaAdicionar = document.getElementById("show-tela-adicionar");
+const botaoFecharJanela = document.getElementById("fechar");
 const getUser = document.getElementById("campo-nome");
 const getMatricula = document.getElementById("campo-matricula");
-const confirmarAdicionar = document.getElementById("adicionar");
-const atualizarBotao = document.getElementById("atualizar-tela");
+const botaoConfirmarAdicionar = document.getElementById("adicionar");
+const botaoAtualizar = document.getElementById("show-tela-atualizar");
 const lista = document.getElementById("lista-de-users");
 
-let configToMenu;
-let editar;
-let apagar;
-let usuariosParaRemover = [];
-
-function adicionarScreen() {
-  if (adicionarPopup) {
-    adicionarPopup.style.display =
-      adicionarPopup.style.display === "none" ? "flex" : "none"; //ternário
+function abreTelaAdicionar() {
+  if (telaAdicionar) {
+    telaAdicionar.style.display =
+      telaAdicionar.style.display === "none" ? "flex" : "none";
   }
 }
 
 function fecharJanela() {
-  if (adicionarPopup) {
-    adicionarPopup.style.display = "none";
+  if (telaAdicionar) {
+    telaAdicionar.style.display = "none";
   }
 }
 
 // Eventos
-if (adicionarBotao) {
-  adicionarBotao.addEventListener("click", adicionarScreen);
+if (botaoShowTelaAdicionar) {
+  botaoShowTelaAdicionar.addEventListener("click", abreTelaAdicionar);
 }
 
-if (confirmarAdicionar) {
-  confirmarAdicionar.addEventListener("click", () =>
-    adicionarUser(getUser.value, getMatricula.value)
+if (botaoConfirmarAdicionar) {
+  botaoConfirmarAdicionar.addEventListener("click", () =>
+    inserirUserFirestore(getUser.value, getMatricula.value)
       .then(() => {
         fecharJanela();
         firebaseParaLocalStorage();
@@ -51,17 +46,13 @@ if (confirmarAdicionar) {
   );
 }
 
-if (atualizarBotao) {
-  atualizarBotao.addEventListener("click", firebaseParaLocalStorage);
+if (botaoAtualizar) {
+  botaoAtualizar.addEventListener("click", firebaseParaLocalStorage);
 }
 
-if (fecharJanelaBotao) {
-  fecharJanelaBotao.addEventListener("click", fecharJanela);
+if (botaoFecharJanela) {
+  botaoFecharJanela.addEventListener("click", fecharJanela);
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("Documento carregado");
-});
 
 document.addEventListener("DOMContentLoaded", () => {
   cache();
@@ -69,41 +60,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //--------------------------------------------
 
-function configuracao(id, qntdUsers) {
-
-  apagar = document.getElementById("apagar");
-  editar = document.getElementById("editar");
-
-  if (usuariosParaRemover.length < 1) {
-    configToMenu.style.display = "none";
-  } else if (usuariosParaRemover.length >= 2) {
-    editar.style.display = "none";
-  } else {
-    configToMenu.style.display = "block";
-    editar.style.display = "block";
-  }
-
-  console.log(id + " // " + qntdUsers);
-
-  apagar.addEventListener("click", () => {
-    //bugado, vai para todos dá lista
-    const resultado = window.confirm("Tem certeza que deseja apagar?");
-    if (resultado) {
-      removerUser(usuariosParaRemover);
-      firebaseParaLocalStorage();
-    } else {
-      console.log("cancelado!");
-    }
-  });
-
-  editar.addEventListener("click", () => {
-    console.log("editar clicado");
-  });
-}
-
 async function firebaseParaLocalStorage() {
   try {
-    const atualizar = await atualizarBanco();
+    const atualizar = await atualizarUsersFirestore();
     console.log(localStorage.setItem("users", JSON.stringify(atualizar)));
     cache();
   } catch (error) {
@@ -111,20 +70,19 @@ async function firebaseParaLocalStorage() {
   }
 }
 
-function cache() {
-  try {
-    lista.innerHTML = "";
+function getLocalStorage() {
+  //melhor
+  const usersString = localStorage.getItem("users");
+  return JSON.parse(usersString);
+}
 
-    const usersString = localStorage.getItem("users");
-    const users = JSON.parse(usersString);
-    if (Array.isArray(users)) {
-      users.forEach((doc) => {
-        const li = document.createElement("li");
-        li.innerHTML = `
+function GeradorDeListaItem(item) {
+  const li = document.createElement("li");
+  li.innerHTML = `
               <div class="item-da-lista">
                 <div class="item-nome-matricula">
-                  <p id="nome">Nome: ${doc.nome}</p>
-                  <p id="matricula">Matrícula: ${doc.matricula}</p>
+                  <p id="nome">Nome: ${item.nome}</p>
+                  <p id="matricula">Matrícula: ${item.matricula}</p>
                 </div>
                 <button type="button" id="button-config" title="Configuração">
                 </button>
@@ -138,34 +96,64 @@ function cache() {
                 </div>
               </div>
             `;
-        lista.appendChild(li);
-        console.log("Retrive feito!");
-        console.log(doc);
+  return li;
+}
 
-        const configuracaoBotao = li.querySelector("#button-config");
-        if (configuracaoBotao) {
-          console.log("passando dentro do for");
-          configuracaoBotao.addEventListener("click", () => {
-            configToMenu = document.querySelector(".config-menu");
-            const itemDaLista = li.querySelector(".item-da-lista");
-            itemDaLista.classList.toggle("toggle");
+function botaoAbreMenuConfiguracao(tag, id, item, usuariosParaAlterar) {
+  tag.addEventListener("click", () => {
+    const configToMenu = document.querySelector(".config-menu");
+    const itemDaLista = item.querySelector(".item-da-lista");
+    const apagar = itemDaLista.querySelector("#apagar");
+    const editar = itemDaLista.querySelector("#editar");
+    itemDaLista.classList.toggle("toggle");
 
-            if (usuariosParaRemover.includes(doc.id)) {
-              usuariosParaRemover.splice(
-                usuariosParaRemover.indexOf(doc.id),
-                1
-              );
-            } else {
-              usuariosParaRemover.push(doc.id);
-            }
-            configuracao(doc.id, users.length);
-            console.log(usuariosParaRemover);
-          });
-        }
-      });
+    console.log(usuariosParaAlterar);
+
+    if (usuariosParaAlterar.length < 1) {
+      configToMenu.style.display = "none";
+    } else if (usuariosParaAlterar.length >= 2) {
+      editar.style.display = "none";
     } else {
-      console.log("Nenhum usuário encontrado ou formato inválido.");
+      configToMenu.style.display = "block";
+      editar.style.display = "block";
     }
+
+    apagar.onclick = () => {
+      const resultado = window.confirm("Tem certeza que deseja apagar?");
+      if (resultado) {
+        removerUserFirestore(usuariosParaAlterar);
+        firebaseParaLocalStorage();
+      } else {
+        console.log("cancelado!");
+      }
+    };
+
+    editar.onclick = () => {
+      console.log("editar clicado");
+    };
+  });
+}
+
+function cache() {
+  try {
+    lista.innerHTML = "";
+    let usuariosParaAlterar = [];
+    getLocalStorage().forEach((doc) => {
+      const listaItem = GeradorDeListaItem(doc);
+      lista.appendChild(listaItem);
+      if (usuariosParaAlterar.includes(doc.id)) {
+        usuariosParaAlterar.splice(usuariosParaAlterar.indexOf(doc.id), 1);
+      } else {
+        usuariosParaAlterar.push(doc.id);
+      }
+      botaoAbreMenuConfiguracao(
+        document.querySelector("#button-config"),
+        doc.id,
+        listaItem,
+        usuariosParaAlterar
+      );
+      console.log(doc.id);
+    });
   } catch (error) {
     console.log(error);
   }

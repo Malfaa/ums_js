@@ -53,14 +53,14 @@ header {
   border-radius: 12px;
 }
 
-.botoes-input#adicionar-tela {
+.botoes-input#show-tela-adicionar {
   background-image: url("/src/res/images/adicionar_bttn.svg"); /* Imagem de fundo */
 }
-.botoes-input#adicionar-tela p,
-.botoes-input#atualizar-tela p {
+.botoes-input#show-tela-adicionar p,
+.botoes-input#show-tela-atualizar p {
   visibility: hidden;
 }
-.botoes-input#atualizar-tela {
+.botoes-input#show-tela-atualizar {
   background-image: url("/src/res/images/refresh_button.svg"); /* Imagem de fundo */
 }
 
@@ -142,7 +142,7 @@ header {
 
 /* Adicionar */
 
-#adicionar-popup {
+#tela-adicionar {
   position: relative;
   flex-direction: column;
   align-items: center;
@@ -405,15 +405,15 @@ e assim pode fazer a pesquisa
     background-color: #b1b1c5;
   }
 
-  .botoes-input#adicionar-tela p,
-  .botoes-input#atualizar-tela p {
+  .botoes-input#show-tela-adicionar p,
+  .botoes-input#show-tela-atualizar p {
     visibility: visible;
   }
 
-  .botoes-input#adicionar-tela {
+  .botoes-input#show-tela-adicionar {
     background-image: none;
   }
-  .botoes-input#atualizar-tela {
+  .botoes-input#show-tela-atualizar {
     background-image: none;
   }
 

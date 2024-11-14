@@ -66,7 +66,7 @@ export function verificarAutenticacao(
 }
 
 //Users.html
-export async function adicionarUser(nome, matricula) {
+export async function inserirUserFirestore(nome, matricula) {
   try {
     const docRef = await addDoc(collection(db, "users"), {
       nome: nome,
@@ -77,7 +77,7 @@ export async function adicionarUser(nome, matricula) {
   }
 }
 
-export async function removerUser(userId) {
+export async function removerUserFirestore(userId) {
   try {
     for (let i = 0; i < userId.length; i++) {
       const docRef = doc(db, "users", userId[i]);
@@ -88,7 +88,7 @@ export async function removerUser(userId) {
   }
 }
 
-export async function atualizarBanco() {
+export async function atualizarUsersFirestore() {
   try {
     const docRef = collection(db, "users");
     const querySnapshot = await getDocs(docRef); //objeto
