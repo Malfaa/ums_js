@@ -55,6 +55,7 @@ header {
 
 .botoes-input#show-tela-adicionar {
   background-image: url("/src/res/images/adicionar_bttn.svg"); /* Imagem de fundo */
+  cursor:pointer;
 }
 .botoes-input#show-tela-adicionar p,
 .botoes-input#show-tela-atualizar p {
@@ -62,12 +63,14 @@ header {
 }
 .botoes-input#show-tela-atualizar {
   background-image: url("/src/res/images/refresh_button.svg"); /* Imagem de fundo */
+  cursor:pointer;
+
 }
 
 .secao-lista-users {
   width: 90vw;
   overflow: scroll;
-  display: relative;
+  position: relative;
   scroll-behavior: smooth;
   overflow-x: hidden;
   height: 84%;
@@ -128,6 +131,7 @@ header {
   background-image: url("/src/res/images/config_button.svg");
   background-position: center;
   background-repeat: no-repeat;
+  cursor: pointer;
 }
 
 .ul-de-configuracao{
@@ -237,18 +241,21 @@ header {
   background-position: center;
   border-radius: 100%;
   border: none;
+  cursor:pointer;
   width: 56px;
   height: 56px;
 }
 
-.config-menu {
+#config-menu {
   display: none;
   position: absolute;
   right: 35px;
+  top:10px;
   width: 160px;
+  height: 100px;
 }
 
-.config-menu .menu {
+#config-menu .menu {
   display: flex;
   top: 0;
   left: 0;
@@ -266,6 +273,7 @@ header {
 
 .menu-item.menu-item:hover {
   background-color: #b1b1c5;
+  cursor: pointer;
 }
 
 @media (max-width: 575px) and (orientation: landscape) {
@@ -360,14 +368,14 @@ e assim pode fazer a pesquisa
     flex-grow: 1;
     justify-content: flex-start;
     align-items: center;
-    background-color: #d0cfff;
+    background-color: #ffffffdb;
   }
   .lista-de-navegacao a:hover {
     background-color: #b1b1c5;
   }
 
   #same-page {
-    background-color: #818197;
+    background-color: #a7a7a8;
   }
 
   .conteudo-main {
@@ -406,7 +414,7 @@ e assim pode fazer a pesquisa
   .botoes-input {
     width: 100%;
     height: 60px;
-    background-color: #d0cfff;
+    background-color: #ffffffdb;
   }
 
   .botoes-input:hover {
@@ -431,7 +439,7 @@ e assim pode fazer a pesquisa
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
-    width: 100%;
+    width:65%;
     justify-content: space-evenly;
   }
 
@@ -442,11 +450,53 @@ e assim pode fazer a pesquisa
     background-image: none;
     background-color: rgb(154, 250, 154);
     font-size: 22px;
+    cursor:pointer;
     border: 1px rgb(38, 83, 24) solid;
     border-radius: 10px;
   }
   .botao-adicionar p {
     visibility: visible;
+  }
+
+  #config-menu {
+    display: none;
+    flex-direction: column;
+    gap: 20px;
+    width: 35%;
+    height: 84%;
+  }
+
+  #config-menu .menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+    height: 40vh;
+    width: 100%;
+  }
+
+  #config-menu .menu ul{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-direction: column;
+  }
+
+  .menu-item {
+    width: 20vw;
+    height: 75px;
+    border: 1px grey solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    border-radius: 15px;
+  }
+  
+  .menu-item.menu-item:hover {
+    background-color: #b1b1c5;
+    cursor: pointer;
   }
 }
 /*Extra large	xl*/

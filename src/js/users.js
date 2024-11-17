@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
 async function firebaseParaLocalStorage() {
   try {
     const atualizar = await atualizarUsersFirestore();
-    console.log(localStorage.setItem("users", JSON.stringify(atualizar)));
+    localStorage.setItem("users", JSON.stringify(atualizar));
     cache();
   } catch (error) {
     console.log(error);
@@ -81,25 +81,6 @@ function getLocalStorage() {
 
 function GeradorDeListaItem(item) {
   const parent = document.createElement("li");
-  // li.innerHTML = `
-  //             <div class="item-da-lista">
-  //               <div class="item-nome-matricula">
-  //                 <p id="nome">Nome: ${item.nome}</p>
-  //                 <p id="matricula">Matrícula: ${item.matricula}</p>
-  //               </div>
-  //               <button type="button" id="button-config" title="Configuração">
-  //               </button>
-  //               <div class="config-menu" style="display:none">
-  //                 <nav class="menu">
-  //                   <ul style="display: flex; width: 100%; text-align: center; flex-direction: column; flex-wrap: nowrap;">
-  //                     <li class="menu-item" id="editar">Editar</li>
-  //                     <li class="menu-item" id="apagar">Apagar</li>
-  //                   </ul>
-  //                 </nav>
-  //               </div>
-  //             </div>
-  //           `;
-
   const divPai = document.createElement("div");
   divPai.className = "item-da-lista";
   const divItem = document.createElement("div");
@@ -121,111 +102,62 @@ function GeradorDeListaItem(item) {
   divItem.appendChild(matricula);
   divPai.appendChild(botaoConfig);
 
-  const configMenu = document.createElement("div");
-  configMenu.id = "config-menu"; configMenu.style.display = "none";
-
-  const nav = document.createElement("nav");
-  nav.id = "menu";
-
-  const ul = document.createElement("ul");
-  ul.className = "ul-de-configuracao";
-  const editar = document.createElement("li");
-  editar.className = "menu-item";
-  const apagar = document.createElement("li");
-  apagar.className = "menu-item";
-
-  parent.appendChild(configMenu);
-  configMenu.appendChild(nav);
-  nav.appendChild(ul);
-  ul.appendChild(editar);
-  ul.appendChild(apagar);
-
   return parent;
 }
-/*
-function botaoAbreMenuConfiguracao(tag, id, item, usuariosParaAlterar) {
-  tag.addEventListener("click", () => {
-    const configToMenu = document.querySelectorAll(".config-menu");
-    const itemDaLista = item.querySelectorAll(".item-da-lista");
-    const apagar = itemDaLista.querySelectorAll("#apagar");
-    const editar = itemDaLista.querySelectorAll("#editar");
-    itemDaLista[id].classList.toggle("selecionado");
 
-    const configToMenu = document.querySelector(".config-menu");
-    const itemDaLista = item.querySelector(".item-da-lista");
-    const apagar = itemDaLista.querySelector("#apagar");
-    const editar = itemDaLista.querySelector("#editar");
-    itemDaLista.classList.toggle("toggle");
+function botaoConfiguracaoMenu(index, item, usuariosParaAlterar) {
+  item[index].classList.toggle("selecionado");
+  const configToMenu = document.querySelector("#config-menu");
+  const apagar = document.getElementsByClassName("menu-item");
+  const editar = document.getElementsByClassName("menu-item");
 
-    console.log(usuariosParaAlterar);
+  console.log(usuariosParaAlterar);
 
-    if (usuariosParaAlterar.length < 1) {
+  if (usuariosParaAlterar.length < 1) {
+    configToMenu.style.display = "none";
+  } else if (usuariosParaAlterar.length >= 2) {
+    editar[0].style.display = "none";
+  } else {
+    configToMenu.style.display = "flex";
+    editar[0].style.display = "flex";
+  }
+
+  apagar[1].onclick = () => {
+    const resultado = window.confirm("Tem certeza que deseja apagar?");
+    if (resultado) {
+      removerUserFirestore(usuariosParaAlterar);
+      firebaseParaLocalStorage();
       configToMenu.style.display = "none";
-    } else if (usuariosParaAlterar.length >= 2) {
-      editar.style.display = "none";
     } else {
-      configToMenu.style.display = "block";
-      editar.style.display = "block";
+      console.log("cancelado!");
     }
+  };
 
-    apagar.onclick = () => {
-      const resultado = window.confirm("Tem certeza que deseja apagar?");
-      if (resultado) {
-        removerUserFirestore(usuariosParaAlterar);
-        firebaseParaLocalStorage();
-      } else {
-        console.log("cancelado!");
-      }
-    };
-
-    editar.onclick = () => {
-      console.log("editar clicado");
-    };
-  });
-}*/
-
-// function botaoTesteConfiguracao(id, item, usuariosParaAlterar) {
-//   const itemDaLista = item.querySelectorAll(".item-da-lista");
-//   // itemDaLista[id].classList.toggle("selecionado");
-//   console.log(itemDaLista[id])
-// }
+  editar[0].onclick = () => {
+    console.log("editar clicado");
+  };
+  // });
+}
 
 function cache() {
   try {
     lista.innerHTML = "";
     let usuariosParaAlterar = [];
     getLocalStorage().forEach((doc, index) => {
-
       const listaItem = GeradorDeListaItem(doc);
-      // GeradorDeListaItem(doc);
-      console.log(listaItem);
       lista.appendChild(listaItem);
-      if (usuariosParaAlterar.includes(doc.id)) {
-        usuariosParaAlterar.splice(usuariosParaAlterar.indexOf(doc.id), 1);
-      } else {
-        usuariosParaAlterar.push(doc.id);
-      }
 
       const botaoConfigurar = document.querySelectorAll(".button-config");
-      console.log(botaoConfigurar[index]);
-      const itemDaLista = listaItem.querySelectorAll(".item-da-lista");
+      const itemDaLista = document.querySelectorAll(".item-da-lista");
 
-      botaoConfigurar[index].addEventListener("click", ()=>{ //TODO fix  resolver aqui, aparentemente ele
-        //está pegando só o primeiro item da lista, no caso o i = 0, o resto é como se não existisse
-        //chuto que seja a ordem no código (linearidade), pois não está "renderizando" os outros
-        //indices da lista.
-        console.log("clicado" + index);
-          // botaoTesteConfiguracao(doc.id, listaItem);
-          // itemDaLista[index].classList.toggle("selecionado");
-          console.log(itemDaLista[index]);
-      })
-
-      // botaoAbreMenuConfiguracao(
-      //   document.querySelector("#button-config"),
-      //   doc.id,
-      //   listaItem,
-      //   usuariosParaAlterar
-      // );
+      botaoConfigurar[index].addEventListener("click", () => {
+        if (usuariosParaAlterar.includes(doc.id)) {
+          usuariosParaAlterar.splice(usuariosParaAlterar.indexOf(doc.id), 1);
+        } else {
+          usuariosParaAlterar.push(doc.id);
+        }
+        botaoConfiguracaoMenu(index, itemDaLista, usuariosParaAlterar);
+      });
       console.log(doc.id);
     });
   } catch (error) {
