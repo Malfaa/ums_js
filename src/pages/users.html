@@ -109,6 +109,36 @@
           <p>Adicionar</p>
         </button>
       </div>      
+
+      <div id="tela-atualizar" style="display: none">
+        <button type="button" class="fechar-janela" id="fechar"></button>
+        <div class="adicionar-header">
+          <img
+            src="/src/res/images/atualizar_icon.svg"
+            alt="Atualizar Usuário"
+            width="40px"
+            height="40px"
+          />
+          <h2>Atualizar Usuário</h2>
+        </div>
+        <input
+          type="text"
+          name="nome"
+          class="campo-texto"
+          placeholder="Nome"
+          id="campo-nome"
+        />
+        <input
+          type="number"
+          name="matricula"
+          class="campo-texto"
+          placeholder="Matricula"
+          id="campo-matricula"
+        />
+        <button type="button" class="botao-adicionar" id="adicionar">
+          <p>Alterar</p>
+        </button>
+      </div>      
     </main>
     <footer>© 2024 GMalfa - Todos os direitos reservados</footer>
     <script type="module" src="/src/js/users.js" defer></script>

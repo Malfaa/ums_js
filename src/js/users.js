@@ -16,19 +16,6 @@ const botaoConfirmarAdicionar = document.getElementById("adicionar");
 const botaoAtualizar = document.getElementById("show-tela-atualizar");
 const lista = document.getElementById("lista-de-users");
 
-function abreTelaAdicionar() {
-  if (telaAdicionar) {
-    telaAdicionar.style.display =
-      telaAdicionar.style.display === "none" ? "flex" : "none";
-  }
-}
-
-function fecharJanela() {
-  if (telaAdicionar) {
-    telaAdicionar.style.display = "none";
-  }
-}
-
 // Eventos
 if (botaoShowTelaAdicionar) {
   botaoShowTelaAdicionar.addEventListener("click", abreTelaAdicionar);
@@ -62,6 +49,19 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 //--------------------------------------------
+
+function abreTelaAdicionar() {
+  if (telaAdicionar) {
+    telaAdicionar.style.display =
+      telaAdicionar.style.display === "none" ? "flex" : "none";
+  }
+}
+
+function fecharJanela() {
+  if (telaAdicionar) {
+    telaAdicionar.style.display = "none";
+  }
+}
 
 async function firebaseParaLocalStorage() {
   try {
@@ -105,7 +105,7 @@ function GeradorDeListaItem(item) {
   return parent;
 }
 
-function botaoConfiguracaoMenu(index, item, usuariosParaAlterar) {
+function botaoConfiguracaoMenu(index, doc, item, usuariosParaAlterar) {
   item[index].classList.toggle("selecionado");
   const configToMenu = document.querySelector("#config-menu");
   const apagar = document.getElementsByClassName("menu-item");
@@ -134,9 +134,16 @@ function botaoConfiguracaoMenu(index, item, usuariosParaAlterar) {
   };
 
   editar[0].onclick = () => {
-    console.log("editar clicado");
+    const telaAtualizar = document.getElementById("tela-atualizar");
+    telaAtualizar.style.display =
+    telaAtualizar.style.display === "none" ? "flex" : "none";
+
+    const nomePlaceHolder = document.getElementById("campo-nome");
+    const matriculaPlaceHolder = document.getElementById("campo-matricula");
+
+    nomePlaceHolder.setAttribute("placeholder", `${doc.nome}`);
+    matriculaPlaceHolder.setAttribute("placeholder", `${doc.matricula}`);
   };
-  // });
 }
 
 function cache() {
@@ -156,7 +163,7 @@ function cache() {
         } else {
           usuariosParaAlterar.push(doc.id);
         }
-        botaoConfiguracaoMenu(index, itemDaLista, usuariosParaAlterar);
+        botaoConfiguracaoMenu(index, doc, itemDaLista, usuariosParaAlterar);
       });
       console.log(doc.id);
     });
@@ -164,5 +171,4 @@ function cache() {
     console.log(error);
   }
 }
-// onclick="configuracao(doc.id)"
 // https://firebase.google.com/docs/firestore/query-data/get-data?hl=pt-br#get_all_documents_in_a_collection
