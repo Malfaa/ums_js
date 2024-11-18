@@ -7,7 +7,7 @@ import {
 //TODO adicionar  ícone no Adicionar e Atualizar dos browsers.
 //TODO alert p/ quando clicar nas outras abas.
 
-const telaAdicionar = document.querySelector("#tela-adicionar");
+const telaPopup = document.querySelector("#tela-adicionar");
 const botaoShowTelaAdicionar = document.getElementById("show-tela-adicionar");
 const botaoFecharJanela = document.getElementById("fechar");
 const getUser = document.getElementById("campo-nome");
@@ -51,15 +51,30 @@ document.addEventListener("DOMContentLoaded", () => {
 //--------------------------------------------
 
 function abreTelaAdicionar() {
-  if (telaAdicionar) {
-    telaAdicionar.style.display =
-      telaAdicionar.style.display === "none" ? "flex" : "none";
+  if (telaPopup) {
+    telaPopup.style.display =
+      telaPopup.style.display === "none" ? "flex" : "none";
+
+    const nomePlaceHolder = document.getElementById("campo-nome");
+    const matriculaPlaceHolder = document.getElementById("campo-matricula");
+    const imagem = document.getElementById("imagem-header");
+    const botao = document.getElementById("adicionar");
+    const tituloHeader = document.getElementById("titulo-header");
+    const botaotextoAdicionar = document.getElementById("botao-texto-adicionar");
+
+    tituloHeader.innerHTML = "Adicionar Usuário";
+    imagem.setAttribute("src", "/src/res/images/add_user.svg");
+    imagem.setAttribute("title","Adicionar usuário");
+    imagem.setAttribute("alt","Adicionar usuário");
+    nomePlaceHolder.setAttribute("placeholder", "Nome");
+    matriculaPlaceHolder.setAttribute("placeholder", "Matrícula");
+    botaotextoAdicionar.innerHTML = "Adicionar";
   }
 }
 
 function fecharJanela() {
-  if (telaAdicionar) {
-    telaAdicionar.style.display = "none";
+  if (telaPopup) {
+    telaPopup.style.display = "none";
   }
 }
 
@@ -134,15 +149,23 @@ function botaoConfiguracaoMenu(index, doc, item, usuariosParaAlterar) {
   };
 
   editar[0].onclick = () => {
-    const telaAtualizar = document.getElementById("tela-atualizar");
-    telaAtualizar.style.display =
-    telaAtualizar.style.display === "none" ? "flex" : "none";
+    telaPopup.style.display =
+    telaPopup.style.display === "none" ? "flex" : "none";
 
     const nomePlaceHolder = document.getElementById("campo-nome");
     const matriculaPlaceHolder = document.getElementById("campo-matricula");
+    const imagem = document.getElementById("imagem-header");
+    // const botao = document.getElementById("adicionar");
+    const tituloHeader = document.getElementById("titulo-header");
+    const botaotextoAdicionar = document.getElementById("botao-texto-adicionar");
 
+    tituloHeader.innerHTML = "Atualizar Usuário";
+    imagem.setAttribute("src", "/src/res/images/atualizar_icon.svg");
+    imagem.setAttribute("title","Alterar usuário");
+    imagem.setAttribute("alt","Alterar usuário");
     nomePlaceHolder.setAttribute("placeholder", `${doc.nome}`);
     matriculaPlaceHolder.setAttribute("placeholder", `${doc.matricula}`);
+    botaotextoAdicionar.innerHTML = "Atualizar";
   };
 }
 
