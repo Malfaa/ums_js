@@ -13,17 +13,37 @@
         src="/src/res/images/logo-240.svg"
         alt="UMS Logo"
         title="User Management System"
-        height="60px"
-        width="60px"
+        id="logo"
       />
       <h1>User Management System</h1>
     </header>
 
     <main id="main">
-      <h1>Registrar</h1>
-      <input type="text" class="textView" id="email" />
-      <input type="text" class="textView" id="senha" />
-      <input type="text" class="textView" id="confirmar-senha" />
+      <h2 id="titulo">Registrar</h2>
+      <section class="main-textviews">
+        <input type="text" class="textView" id="email" placeholder="E-mail" />
+        <div class="main-textviews senha">
+          <input
+            type="password"
+            class="textView"
+            id="senha"
+            placeholder="Senha"
+          />
+          <button id="togglePassword" class="eye-icon">
+            <img
+              src="/src/res/images/visibility_off_24.svg"
+              alt="Show password"
+              id="eye-icon"
+            />
+          </button>
+        </div>
+        <input
+          type="password"
+          class="textView"
+          id="confirmar-senha"
+          placeholder="Confirmar senha"
+        />
+      </section>
       <input
         type="image"
         id="icone-google"
@@ -31,8 +51,10 @@
         alt="Registrar via Google"
         title="Registrar via Google"
       />
-      <span id="navegar-registrar-login"></span>
-      <button id="botao-confirmar-registrar-login"></button>
+      <span class="navegar-registrar-login" id="nav-registrar">
+        Já está registrado? Clique aqui
+      </span>
+      <button id="botao-confirmar-registrar-login">Confirmar</button>
     </main>
     <footer>© 2024 GMalfa - Todos os direitos reservados</footer>
     <script type="module" src="/src/js/login.js"></script>
