@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login UMS</title>
+    <title>Registrar</title>
     <link rel="stylesheet" href="/src/style.css" />
     <link rel="stylesheet" href="/src/styles/login.css" />
   </head>
@@ -13,81 +13,58 @@
         src="/src/res/images/logo-240.svg"
         alt="UMS Logo"
         title="User Management System"
-        height="60px"
-        width="60px"
+        id="logo"
       />
       <h1>User Management System</h1>
     </header>
-    <main>
-      <section class="registrar">
-        <h2>Registrar</h2>
-        <input
-          type="email"
-          name="email"
-          class="campo-texto"
-          placeholder="E-mail"
-          autocomplete="email"
-        />
-        <input
-          type="password"
-          name="senha"
-          class="campo-texto"
-          placeholder="Senha"
-        />
-        <input
-          type="password"
-          name="senha"
-          class="campo-texto"
-          placeholder="Digite novamente a senha"
-        />
-        <div class="area-de-registrar">
-          <input
-            type="image"
-            src="/src/res/images/google-color-svgrepo-com.svg"
-            alt="Registrar via Google"
-            title="Registrar via Google"
-            height="30px"
-            width="30px"
-            class="google"
-          />
-          <button type="submit" id="registrar" class="botao-registrar">
-            Registrar
-          </button>
-        </div>
-      </section>
-      <section class="login">
-        <h2>Logar</h2>
-        <div class="area-de-logar">
-          <input
-            type="email"
-            name="email"
-            class="campo-texto"
-            placeholder="E-mail"
-            autocomplete="email"
-          />
+
+    <main id="main">
+      <h2 id="titulo">Registrar</h2>
+      <section class="main-textviews">
+        <input type="text" class="textView" id="email" placeholder="E-mail" />
+        <div class="main-textviews senha">
           <input
             type="password"
-            name="senha"
-            class="campo-texto"
+            class="textView"
+            id="senha"
             placeholder="Senha"
           />
-        </div>
-        <div class="area-de-registrar">
-          <input
-            type="image"
-            src="/src/res/images/google-color-svgrepo-com.svg"
-            alt="Registrar via Google"
-            title="Registrar via Google"
-            height="30px"
-            width="30px"
-            class="google"
-          />
-          <button type="submit" id="login" class="botao-registrar">
-            Login
+          <button id="togglePassword" class="eye-icon">
+            <img
+              src="/src/res/images/visibility_off_24.svg"
+              alt="Show password"
+              class="visibility";
+            />
           </button>
-          <a href="/src/pages/users.html" style="display: block">PROXIMA PÁGINA</a>
         </div>
+        <div class="main-textviews senha">
+        <input
+          type="password"
+          class="textView"
+          id="confirmar-senha"
+          placeholder="Confirmar senha"
+        />
+        <button id="togglePassword" class="eye-icon">
+          <img
+            src="/src/res/images/visibility_off_24.svg"
+            alt="Show password"
+            class="visibility"
+          />
+        </button>
+      </div>
+
       </section>
+      <input
+        type="image"
+        id="icone-google"
+        src="/src/res/images/google-color-svgrepo-com.svg"
+        alt="Registrar via Google"
+        title="Registrar via Google"
+      />
+      <span class="navegar-registrar-login" id="nav-registrar">
+        Já está registrado? Clique aqui
+      </span>
+      <button id="botao-confirmar-registrar-login">Confirmar</button>
     </main>
     <footer>© 2024 GMalfa - Todos os direitos reservados</footer>
     <script type="module" src="/src/js/login.js"></script>
