@@ -5,6 +5,8 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
 } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js"; //"firebase/auth";
 import {
   getFirestore,
@@ -126,9 +128,5 @@ function updateUser(userId, newData) {
   }
 }
 
-const authP = getAuth();
-createUserWithEmailAndPassword(authP, email, passoword).then(
-  (userCredential) => {
-    const user = userCredential.user;
-  }
-);
+export function createUser(){createUserWithEmailAndPassword(auth, email, passoword);}
+export function signUser(){signInWithEmailAndPassword(auth, email, password);}

@@ -1,6 +1,6 @@
 @import url(/src/style.css);
 /*Default < 576px*/
-body{
+body {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,11 +10,11 @@ body{
   min-height: 667px;
 }
 
-header{
+header {
   padding-top: 40px;
 }
 
-#logo{
+#logo {
   height: 67px;
   height: 67px;
 }
@@ -58,7 +58,7 @@ h1 {
   overflow-y: hidden;
 }
 
-.main-textviews{
+.main-textviews {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -67,11 +67,12 @@ h1 {
   height: fit-content;
 }
 
-.main-textviews.senha{
+.main-textviews.senha {
   position: relative;
   flex-direction: row;
   align-content: center;
   justify-content: center;
+  width: 100%;
 }
 
 .textView {
@@ -102,7 +103,7 @@ h1 {
   height: 24px;
 }
 
-.textView.textViewComErro{
+.textView.textViewComErro {
   border-color: rgb(184, 13, 13);
   background-color: rgb(192, 159, 159);
 }
@@ -129,7 +130,8 @@ h1 {
   cursor: pointer;
 }
 
-#botao-confirmar-registrar-login {
+#botao-confirmar-registrar,
+#botao-confirmar-logar {
   display: flex;
   width: 320px;
   height: 60px;
@@ -153,7 +155,7 @@ h1 {
     display: block;
   }
 
-  header{
+  header {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -162,24 +164,25 @@ h1 {
     height: 100%;
   }
 
-  #logo{
+  #logo {
     width: 180px;
     height: 180px;
   }
 
-  body{
+  body {
     display: flex;
     flex-direction: row;
   }
 
-  .textView{
+  .textView {
     max-width: 700px;
     font-size: 24px;
   }
 
-  .eye-icon {/*TODO consertar aqui, o ícone do olho está muito para direita, ele não acompanha
+  .eye-icon {
+    /*TODO consertar aqui, o ícone do olho está muito para direita, ele não acompanha
                 o textView, ele acompanha o lado direito da tela*/
-    position: absolute; 
+    position: absolute;
     background: transparent;
     border: none;
     cursor: pointer;
@@ -187,4 +190,13 @@ h1 {
     margin-right: 40px;
   }
 
+  @media (min-width: 1320px) {
+    .main-textviews.senha {
+      position: relative;
+      flex-direction: row;
+      align-content: center;
+      justify-content: center;
+      width: 800px;
+    }
+  }
 }

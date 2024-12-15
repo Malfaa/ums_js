@@ -1,17 +1,19 @@
-import { verificarAutenticacao, googleAuth } from "/src/js/apiservice.js";
+import {
+  verificarAutenticacao,
+  googleAuth,
+  createUser,
+  signUser,
+} from "/src/js/apiservice.js";
 
 const botaoGoogle = document.getElementById("icone-google");
 const navegar = document.querySelectorAll(".navegar-registrar-login");
-const botaoRegistrarLogar = document.querySelector(
-  "#botao-confirmar-registrar-login"
-);
-const titulo = document.querySelector("#titulo");
-const confirmarEmail = document.getElementById("confirmar-senha");
+const botaoRegistrarLogar = document.getElementById("botao-confirmar-registrar");
+const email = document.getElementById("email");
+const senha = document.getElementById("senha");
+const confSenha = document.getElementById("confirmar-senha");
 
 const eyeIcon = document.getElementsByClassName("visibility");
-const senha = document.getElementsByClassName("textView");
-
-let status = "Registrar";
+const textView = document.getElementsByClassName("textView");
 
 botaoGoogle.addEventListener("click", googleAuth);
 
@@ -26,24 +28,42 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+Array.from(eyeIcon).forEach((item, index) => {
+  item.addEventListener("click", () => {
+    if (textView[index + 1].type === "password") {
+      item.src = "src/res/images/visibility_24.svg";
+      textView[index + 1].type = "text";
+    } else {
+      item.src = "src/res/images/visibility_off_24.svg";
+      textView[index + 1].type = "password";
+    }
+  });
+});
+
 navegar[0].addEventListener("click", () => {
   if (navegar[0].id === "nav-registrar") {
     window.open("/src/pages/login.html", "_self");
+    botaoRegistrarLogar.id = "botao-confirmar-logar";
   } else {
     window.open("/index.html", "_self");
+    botaoRegistrarLogar.id = "botao-confirmar-registrar";
   }
 });
 
-Array.from(eyeIcon).forEach((item, index) => {
-  item.addEventListener("click", () => {
-    if (senha[index + 1].type === "password") {
-      item.src = "src/res/images/visibility_24.svg";
-      senha[index + 1].type = "text";
+botaoRegistrarLogar.addEventListener("click", () => {  //TODO trocar o id do Botão p/ botao-confirmar-logar, o botão só não está respondendo por causa do id que não alterou
+  try {
+    if (botaoRegistrarLogar.id === "botao-confirmar-registrar") {
+      if (senha.value === confSenha.value) {
+        createUser(googleAuth, email.value, senha.value);
+      } else {
+        confSenha.classList.add("textViewComErro");
+      }
     } else {
-      item.src = "src/res/images/visibility_off_24.svg";
-      senha[index + 1].type = "password";
+      signUser(googleAuth, email.value, senha.value).then(console.log("teste"));
     }
-  });
+  } catch (error) {
+    Error("Status" + error.status);
+  }
 });
 
 //-----------------------------------------------------------
