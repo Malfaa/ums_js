@@ -1,6 +1,6 @@
 import { verificarAutenticacao, googleAuth } from "/src/js/apiservice.js";
 
-const botaoGoogle = document.getElementsByClassName("google");
+const botaoGoogle = document.getElementById("icone-google");
 const navegar = document.querySelectorAll(".navegar-registrar-login");
 const botaoRegistrarLogar = document.querySelector(
   "#botao-confirmar-registrar-login"
@@ -13,9 +13,7 @@ const senha = document.getElementsByClassName("textView");
 
 let status = "Registrar";
 
-for (let i = 0; i < botaoGoogle.length; i++) {
-  botaoGoogle[i].addEventListener("click", googleAuth);
-}
+botaoGoogle.addEventListener("click", googleAuth);
 
 document.addEventListener("DOMContentLoaded", () => {
   verificarAutenticacao((autenticado) => {
@@ -32,7 +30,7 @@ navegar[0].addEventListener("click", () => {
   if (navegar[0].id === "nav-registrar") {
     window.open("/src/pages/login.html", "_self");
   } else {
-    window.open("/index.html", "_self"); 
+    window.open("/index.html", "_self");
   }
 });
 
@@ -49,7 +47,6 @@ Array.from(eyeIcon).forEach((item, index) => {
 });
 
 //-----------------------------------------------------------
-
 
 // botaoRegistrarLogar.addEventListener("click", () => {
 //   //verificar se os textViews estão com dados de acordo, se não, notificar

@@ -4,6 +4,7 @@ import {
   onAuthStateChanged,
   signInWithPopup,
   GoogleAuthProvider,
+  createUserWithEmailAndPassword,
 } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js"; //"firebase/auth";
 import {
   getFirestore,
@@ -124,3 +125,10 @@ function updateUser(userId, newData) {
     console.error("Erro ao atualizar usuário: ", error);
   }
 }
+
+const authP = getAuth();
+createUserWithEmailAndPassword(authP, email, passoword).then(
+  (userCredential) => {
+    const user = userCredential.user;
+  }
+);
