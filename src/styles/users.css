@@ -374,8 +374,16 @@ e assim pode fazer a pesquisa
     display: flex;
     flex-grow: 1;
     width: 180px;
+    text-decoration: none;
+    border: 1px grey solid;
+    border-radius: 6px;
+    color: black;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #ffffffdb;
+    cursor: pointer;
   }
-  .lista-de-navegacao a {
+  /* .lista-de-navegacao a {
     text-decoration: none;
     border: 1px grey solid;
     border-radius: 6px;
@@ -387,8 +395,8 @@ e assim pode fazer a pesquisa
     justify-content: flex-start;
     align-items: center;
     background-color: #ffffffdb;
-  }
-  .lista-de-navegacao a:hover {
+  } */
+  .lista-de-navegacao li:hover {
     background-color: #b1b1c5;
   }
 

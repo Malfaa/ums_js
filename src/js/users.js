@@ -1,11 +1,14 @@
 import {
+  auth,
   atualizarUsersFirestore,
   inserirUserFirestore,
   removerUserFirestore,
+  signOutUser
 } from "/src/js/apiservice.js";
 
 //TODO adicionar  ícone no Adicionar e Atualizar dos browsers.
 //TODO alert p/ quando clicar nas outras abas.
+//TODO IMPORTANTE ADICIONAR UMA COLEÇÃO PARA CADA USUÁRIO
 
 const telaPopup = document.querySelector("#tela-adicionar");
 const botaoShowTelaAdicionar = document.getElementById("show-tela-adicionar");
@@ -194,4 +197,14 @@ function cache() {
     console.log(error);
   }
 }
+
+const logout = document.getElementById("logout");
+
+logout.addEventListener("click", () => {
+  try {
+    signOutUser(auth);
+  }catch (e) {
+    console.error(e.message);
+  }
+});
 // https://firebase.google.com/docs/firestore/query-data/get-data?hl=pt-br#get_all_documents_in_a_collection

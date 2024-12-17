@@ -19,8 +19,7 @@
           />
         </div>
         <ul class="lista-de-navegacao">
-          <li>
-            <a href="/src/pages/users.html" id="same-page">
+          <li id="same-page">
               <img
                 src="/src/res/images/user_icon.svg"
                 alt="Users"
@@ -28,22 +27,15 @@
                 height="25px"
                 width="25px"
               />Users
-            </a>
           </li>
-          <li>
-            <a href="/pages/">
-              <img src="" alt="" title="Management" />Management
-            </a>
+          <li id="management">
+            <img src="" alt="" title="Management" />Management
           </li>
-          <li>
-            <a href="/pages/">
-              <img src="" alt="" title="Configuration" />Configuration
-            </a>
+          <li id="configuration">
+            <img src="" alt="" title="Configuration" />Configuration
           </li>
-          <li>
-            <a href="/index.html">
-              <img src="" alt="" title="Logout" />Logout
-            </a>
+          <li id="logout">
+            <img src="" alt="" title="Logout" />Logout
           </li>
         </ul>
       </nav>
@@ -69,8 +61,8 @@
           </section>
           <section class="secao-lista-users">
             <ul id="lista-de-users"></ul>
-            <div id="config-menu" >
-              <nav class="menu"> 
+            <div id="config-menu">
+              <nav class="menu">
                 <ul>
                   <li class="menu-item">Editar</li>
                   <li class="menu-item">Apagar</li>
@@ -83,12 +75,7 @@
       <div id="tela-adicionar" style="display: none">
         <button type="button" class="fechar-janela" id="fechar"></button>
         <div class="adicionar-header">
-          <img
-            src=""
-            id = "imagem-header"
-            width="40px"
-            height="40px"
-          />
+          <img src="" id="imagem-header" width="40px" height="40px" />
           <h2 id="titulo-header"></h2>
         </div>
         <input
@@ -108,7 +95,7 @@
         <button type="button" class="botao-adicionar" id="adicionar">
           <p id="botao-texto-adicionar"></p>
         </button>
-      </div>      
+      </div>
 
       <div id="tela-atualizar" style="display: none">
         <button type="button" class="fechar-janela" id="fechar"></button>
@@ -138,11 +125,9 @@
         <button type="button" class="botao-adicionar" id="adicionar">
           <p>Alterar</p>
         </button>
-      </div>      
+      </div>
     </main>
     <footer>© 2024 GMalfa - Todos os direitos reservados</footer>
     <script type="module" src="/src/js/users.js" defer></script>
   </body>
 </html>
-
-            

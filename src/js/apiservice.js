@@ -54,6 +54,34 @@ export function googleAuth() {
     });
 }
 
+export function createUser(auth, email, password) {
+  createUserWithEmailAndPassword(auth, email, password)
+    .then((result) => {
+      const user = result.user;
+      console.log("Usuário autenticado:", user);
+    })
+    .catch((error) => {
+      console.error("Erro ao fazer login:", error);
+    });
+}
+export function signUser(auth, email, password) {
+  signInWithEmailAndPassword(auth, email, password).then((result) => {
+    const user = result.user;
+    console.log("Usuário autenticado:", user);
+  })
+  .catch((error) => {
+    console.error("Erro ao fazer login:", error);
+  });;
+}
+
+export function signOutUser(auth){
+  signOut(auth).then(()=>{
+    window.open("/index.html", "_self");
+  }).catch((error)=>{
+    console.log(error.message);
+  });
+}
+
 export function verificarAutenticacao(
   callback /*este parâmetro é uma função*/
 ) {
@@ -127,6 +155,3 @@ function updateUser(userId, newData) {
     console.error("Erro ao atualizar usuário: ", error);
   }
 }
-
-export function createUser(){createUserWithEmailAndPassword(auth, email, passoword);}
-export function signUser(){signInWithEmailAndPassword(auth, email, password);}
