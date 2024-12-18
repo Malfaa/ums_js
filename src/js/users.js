@@ -1,9 +1,10 @@
 import {
   auth,
   atualizarUsersFirestore,
+  updateUser,
   inserirUserFirestore,
   removerUserFirestore,
-  signOutUser
+  signOutUser,
 } from "/src/js/apiservice.js";
 
 //TODO adicionar  ícone no Adicionar e Atualizar dos browsers.
@@ -53,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //--------------------------------------------
 
-function abreTelaAdicionar() {
+function abreTelaAdicionar() { //TODO TRANSFORMAR ESSA FUNCTION EM UM CONSTRUTOR
   if (telaPopup) {
     telaPopup.style.display =
       telaPopup.style.display === "none" ? "flex" : "none";
@@ -61,7 +62,7 @@ function abreTelaAdicionar() {
     const nomePlaceHolder = document.getElementById("campo-nome");
     const matriculaPlaceHolder = document.getElementById("campo-matricula");
     const imagem = document.getElementById("imagem-header");
-    const botao = document.getElementById("adicionar");
+    // const botao = document.getElementById("adicionar");
     const tituloHeader = document.getElementById("titulo-header");
     const botaotextoAdicionar = document.getElementById("botao-texto-adicionar");
 
@@ -160,7 +161,7 @@ function botaoConfiguracaoMenu(index, doc, item, usuariosParaAlterar) {
     const imagem = document.getElementById("imagem-header");
     // const botao = document.getElementById("adicionar");
     const tituloHeader = document.getElementById("titulo-header");
-    const botaotextoAdicionar = document.getElementById("botao-texto-adicionar");
+    const botaotextoAdicionar = document.getElementById("botao-texto-adicionar"); //TODO alterar p/ função de atualizar
 
     tituloHeader.innerHTML = "Atualizar Usuário";
     imagem.setAttribute("src", "/src/res/images/atualizar_icon.svg");

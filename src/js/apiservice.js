@@ -146,7 +146,7 @@ export async function getUser(userId) {
   const getUser = await getDoc(userRef);
 }
 
-function updateUser(userId, newData) {
+export function updateUser(userId, newData) {
   //TODO alterar usuário
   try {
     db.collection("users").doc(userId).update(newData);
