@@ -241,6 +241,7 @@ header {
   width: 50px;
   background-image: url(/src/res/images/check_bttn.svg);
   background-repeat: no-repeat;
+  cursor: pointer;
   background-position: center;
   border-radius: 100%;
   border: none;
@@ -292,6 +293,11 @@ header {
 .menu-item.menu-item:hover {
   background-color: #b1b1c5;
   cursor: pointer;
+}
+
+.lista-de-navegacao li .disabled {
+  cursor: none;
+  background-color: rgb(154, 143, 160);
 }
 
 @media (max-width: 575px) and (orientation: landscape) {
@@ -476,7 +482,7 @@ e assim pode fazer a pesquisa
     background-image: none;
     background-color: rgb(154, 250, 154);
     font-size: 22px;
-    cursor:pointer;
+    cursor: pointer;
     border: 1px rgb(38, 83, 24) solid;
     border-radius: 10px;
   }
@@ -523,6 +529,11 @@ e assim pode fazer a pesquisa
   .menu-item.menu-item:hover {
     background-color: #b1b1c5;
     cursor: pointer;
+  }
+
+  .lista-de-navegacao li .disabled {
+    cursor: none;
+    background-color: rgb(154, 143, 160);
   }
 }
 /*Extra large	xl*/

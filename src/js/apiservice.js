@@ -147,11 +147,19 @@ export async function getUser(userId) {
 }
 
 export function updateUser(userId, newData) {
-  //TODO alterar usuário
   try {
     db.collection("users").doc(userId).update(newData);
     console.log("Usuário atualizado com sucesso!");
   } catch (error) {
     console.error("Erro ao atualizar usuário: ", error);
   }
+
+  /*
+  //firebase v9
+const db = getFirestore();
+async (e) => { //...
+ await updateDoc(doc(db, "users", doc.id), {
+    foo: 'bar'
+  });
+//....*/
 }

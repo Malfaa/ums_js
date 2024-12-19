@@ -7,37 +7,21 @@ import {
   signOutUser,
 } from "/src/js/apiservice.js";
 
-//TODO adicionar  ícone no Adicionar e Atualizar dos browsers.
-//TODO alert p/ quando clicar nas outras abas.
-//TODO IMPORTANTE ADICIONAR UMA COLEÇÃO PARA CADA USUÁRIO
-
 const telaPopup = document.querySelector("#tela-adicionar");
 const botaoShowTelaAdicionar = document.getElementById("show-tela-adicionar");
 const botaoFecharJanela = document.getElementById("fechar");
 const getUser = document.getElementById("campo-nome");
 const getMatricula = document.getElementById("campo-matricula");
-const botaoConfirmarAdicionar = document.getElementById("adicionar");
+let botaoConfirmarAdicionar = document.getElementById("adicionar");
 const botaoAtualizar = document.getElementById("show-tela-atualizar");
 const lista = document.getElementById("lista-de-users");
 
+let editarId;
+let usuariosParaAlterar = [];
+
 // Eventos
 if (botaoShowTelaAdicionar) {
-  botaoShowTelaAdicionar.addEventListener("click", abreTelaAdicionar);
-}
-
-if (botaoConfirmarAdicionar) {
-  botaoConfirmarAdicionar.addEventListener("click", () =>
-    inserirUserFirestore(getUser.value, getMatricula.value)
-      .then(() => {
-        fecharJanela();
-        firebaseParaLocalStorage();
-        getUser.value = "";
-        getMatricula.value = "";
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-  );
+  botaoShowTelaAdicionar.addEventListener("click", ConstrutorTela);
 }
 
 if (botaoAtualizar) {
@@ -52,9 +36,40 @@ document.addEventListener("DOMContentLoaded", () => {
   cache();
 });
 
+botaoConfirmarAdicionar.addEventListener("click", () => {
+  if (botaoConfirmarAdicionar.id === "adicionar") {
+    inserirUserFirestore(getUser.value, getMatricula.value)
+      .then(() => {
+        fecharJanela();
+        firebaseParaLocalStorage();
+        getUser.value = "";
+        getMatricula.value = "";
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  } else {
+    fecharJanela(); 
+    updateUser(editarId, {nome: `${getUser.value}`, matricula: `${getMatricula.value}`});
+    firebaseParaLocalStorage();
+    getUser.value = "";
+    getMatricula.value = "";
+    usuariosParaAlterar = [];
+  }
+});
+
 //--------------------------------------------
 
-function abreTelaAdicionar() { //TODO TRANSFORMAR ESSA FUNCTION EM UM CONSTRUTOR
+function ConstrutorTela(
+  titulo = "Adicionar Usuário",
+  imgSrc = "/src/res/images/add_user.svg",
+  imgTitle = "Adicionar usuário",
+  imgAlt = "Adicionar usuário",
+  nome = "Nome",
+  matricula = "Matrícula",
+  botaoTexto = "Adicionar",
+  botaoId = "adicionar"
+) {
   if (telaPopup) {
     telaPopup.style.display =
       telaPopup.style.display === "none" ? "flex" : "none";
@@ -62,18 +77,22 @@ function abreTelaAdicionar() { //TODO TRANSFORMAR ESSA FUNCTION EM UM CONSTRUTOR
     const nomePlaceHolder = document.getElementById("campo-nome");
     const matriculaPlaceHolder = document.getElementById("campo-matricula");
     const imagem = document.getElementById("imagem-header");
-    // const botao = document.getElementById("adicionar");
     const tituloHeader = document.getElementById("titulo-header");
-    const botaotextoAdicionar = document.getElementById("botao-texto-adicionar");
+    const botaotextoAdicionar = document.getElementById(
+      "botao-texto-adicionar"
+    );
 
-    tituloHeader.innerHTML = "Adicionar Usuário";
-    imagem.setAttribute("src", "/src/res/images/add_user.svg");
-    imagem.setAttribute("title","Adicionar usuário");
-    imagem.setAttribute("alt","Adicionar usuário");
-    nomePlaceHolder.setAttribute("placeholder", "Nome");
-    matriculaPlaceHolder.setAttribute("placeholder", "Matrícula");
-    botaotextoAdicionar.innerHTML = "Adicionar";
+    tituloHeader.innerHTML = titulo;
+    imagem.setAttribute("src", imgSrc);
+    imagem.setAttribute("title", imgTitle);
+    imagem.setAttribute("alt", imgAlt);
+    nomePlaceHolder.setAttribute("placeholder", nome);
+    matriculaPlaceHolder.setAttribute("placeholder", matricula);
+    botaotextoAdicionar.innerHTML = botaoTexto;
+    botaoConfirmarAdicionar.id = botaoId;
+    console.log(botaoConfirmarAdicionar.id);
   }
+
 }
 
 function fecharJanela() {
@@ -127,56 +146,50 @@ function GeradorDeListaItem(item) {
 function botaoConfiguracaoMenu(index, doc, item, usuariosParaAlterar) {
   item[index].classList.toggle("selecionado");
   const configToMenu = document.querySelector("#config-menu");
-  const apagar = document.getElementsByClassName("menu-item");
-  const editar = document.getElementsByClassName("menu-item");
+  const menuItem = document.querySelectorAll(".menu-item");
+  // const editarApagar = document.getElementsByClassName("menu-item");
 
   console.log(usuariosParaAlterar);
 
   if (usuariosParaAlterar.length < 1) {
     configToMenu.style.display = "none";
   } else if (usuariosParaAlterar.length >= 2) {
-    editar[0].style.display = "none";
+    menuItem[0].style.display = "none";
+    menuItem[1].style.height = "fit-content";
   } else {
     configToMenu.style.display = "flex";
-    editar[0].style.display = "flex";
+    menuItem[0].style.display = "flex";
   }
 
-  apagar[1].onclick = () => {
+  menuItem[1].onclick = () => {
     const resultado = window.confirm("Tem certeza que deseja apagar?");
     if (resultado) {
       removerUserFirestore(usuariosParaAlterar);
-      firebaseParaLocalStorage();
       configToMenu.style.display = "none";
+      firebaseParaLocalStorage();
     } else {
       console.log("cancelado!");
     }
   };
 
-  editar[0].onclick = () => {
-    telaPopup.style.display =
-    telaPopup.style.display === "none" ? "flex" : "none";
-
-    const nomePlaceHolder = document.getElementById("campo-nome");
-    const matriculaPlaceHolder = document.getElementById("campo-matricula");
-    const imagem = document.getElementById("imagem-header");
-    // const botao = document.getElementById("adicionar");
-    const tituloHeader = document.getElementById("titulo-header");
-    const botaotextoAdicionar = document.getElementById("botao-texto-adicionar"); //TODO alterar p/ função de atualizar
-
-    tituloHeader.innerHTML = "Atualizar Usuário";
-    imagem.setAttribute("src", "/src/res/images/atualizar_icon.svg");
-    imagem.setAttribute("title","Alterar usuário");
-    imagem.setAttribute("alt","Alterar usuário");
-    nomePlaceHolder.setAttribute("placeholder", `${doc.nome}`);
-    matriculaPlaceHolder.setAttribute("placeholder", `${doc.matricula}`);
-    botaotextoAdicionar.innerHTML = "Atualizar";
+  menuItem[0].onclick = () => {
+    editarId = doc.id;
+    new ConstrutorTela(
+      "Atualizar Usuário",
+      "/src/res/images/atualizar_icon.svg",
+      "Alterar usuário",
+      "Alterar usuário",
+      `${doc.nome}`,
+      `${doc.matricula}`,
+      "Atualizar",
+      "atualizar"
+    );
   };
 }
 
 function cache() {
   try {
     lista.innerHTML = "";
-    let usuariosParaAlterar = [];
     getLocalStorage().forEach((doc, index) => {
       const listaItem = GeradorDeListaItem(doc);
       lista.appendChild(listaItem);
@@ -204,7 +217,7 @@ const logout = document.getElementById("logout");
 logout.addEventListener("click", () => {
   try {
     signOutUser(auth);
-  }catch (e) {
+  } catch (e) {
     console.error(e.message);
   }
 });
