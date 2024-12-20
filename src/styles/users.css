@@ -517,7 +517,7 @@ e assim pode fazer a pesquisa
 
   .menu-item {
     width: 20vw;
-    height: 75px;
+    height: 35%;
     border: 1px grey solid;
     display: flex;
     justify-content: center;

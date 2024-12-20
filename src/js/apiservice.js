@@ -11,6 +11,7 @@ import {
 import {
   getFirestore,
   addDoc,
+  updateDoc,
   deleteDoc,
   getDoc,
   getDocs,
@@ -65,21 +66,24 @@ export function createUser(auth, email, password) {
     });
 }
 export function signUser(auth, email, password) {
-  signInWithEmailAndPassword(auth, email, password).then((result) => {
-    const user = result.user;
-    console.log("Usuário autenticado:", user);
-  })
-  .catch((error) => {
-    console.error("Erro ao fazer login:", error);
-  });;
+  signInWithEmailAndPassword(auth, email, password)
+    .then((result) => {
+      const user = result.user;
+      console.log("Usuário autenticado:", user);
+    })
+    .catch((error) => {
+      console.error("Erro ao fazer login:", error);
+    });
 }
 
-export function signOutUser(auth){
-  signOut(auth).then(()=>{
-    window.open("/index.html", "_self");
-  }).catch((error)=>{
-    console.log(error.message);
-  });
+export function signOutUser(auth) {
+  signOut(auth)
+    .then(() => {
+      window.open("/index.html", "_self");
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 }
 
 export function verificarAutenticacao(
@@ -146,9 +150,15 @@ export async function getUser(userId) {
   const getUser = await getDoc(userRef);
 }
 
-export function updateUser(userId, newData) {
+export async function updateUser(userId, nome, matricula) {
   try {
-    db.collection("users").doc(userId).update(newData);
+    // db.collection("users").doc(userId).update(newData);
+
+    const ref = doc(db, "users", userId);
+    await updateDoc(ref, {
+      nome: nome,
+      matricula: matricula,
+    });
     console.log("Usuário atualizado com sucesso!");
   } catch (error) {
     console.error("Erro ao atualizar usuário: ", error);
@@ -157,9 +167,6 @@ export function updateUser(userId, newData) {
   /*
   //firebase v9
 const db = getFirestore();
-async (e) => { //...
- await updateDoc(doc(db, "users", doc.id), {
-    foo: 'bar'
-  });
+
 //....*/
 }

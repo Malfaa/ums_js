@@ -12,29 +12,47 @@ const botaoShowTelaAdicionar = document.getElementById("show-tela-adicionar");
 const botaoFecharJanela = document.getElementById("fechar");
 const getUser = document.getElementById("campo-nome");
 const getMatricula = document.getElementById("campo-matricula");
-let botaoConfirmarAdicionar = document.getElementById("adicionar");
 const botaoAtualizar = document.getElementById("show-tela-atualizar");
 const lista = document.getElementById("lista-de-users");
+const configToMenu = document.querySelector("#config-menu");
+// const itemDaLista = document.querySelectorAll(".item-da-lista");
 
+let botaoConfirmarAdicionar = document.getElementById("adicionar");
 let editarId;
 let usuariosParaAlterar = [];
 
+function reset() {
+  configToMenu.style.display = "none";
+  usuariosParaAlterar = [];
+  // itemDaLista.forEach((item, index) => {
+  //   item[index].classList.remove("selecionado")
+  // });
+}
+
 // Eventos
 if (botaoShowTelaAdicionar) {
-  botaoShowTelaAdicionar.addEventListener("click", ConstrutorTela);
+  botaoShowTelaAdicionar.addEventListener("click", () => {
+    reset();
+    new ConstrutorTela();
+  });
 }
 
 if (botaoAtualizar) {
-  botaoAtualizar.addEventListener("click", firebaseParaLocalStorage);
+  botaoAtualizar.addEventListener("click", () => {
+    reset();
+    firebaseParaLocalStorage;
+  });
 }
 
 if (botaoFecharJanela) {
-  botaoFecharJanela.addEventListener("click", fecharJanela);
+  botaoFecharJanela.addEventListener("click", () => fecharJanela());
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   cache();
 });
+
+//Adicionar um verificador de chave primária. Se há chave primária igual, informar que deve ser outra (PRIMARY KEY);
 
 botaoConfirmarAdicionar.addEventListener("click", () => {
   if (botaoConfirmarAdicionar.id === "adicionar") {
@@ -42,19 +60,19 @@ botaoConfirmarAdicionar.addEventListener("click", () => {
       .then(() => {
         fecharJanela();
         firebaseParaLocalStorage();
-        getUser.value = "";
-        getMatricula.value = "";
       })
       .catch((err) => {
         console.log(err);
       });
   } else {
-    fecharJanela(); 
-    updateUser(editarId, {nome: `${getUser.value}`, matricula: `${getMatricula.value}`});
-    firebaseParaLocalStorage();
-    getUser.value = "";
-    getMatricula.value = "";
-    usuariosParaAlterar = [];
+    if (getUser.value.length > 0 && getMatricula.value.length > 0) {
+      updateUser(editarId, getUser.value, getMatricula.value);
+      fecharJanela();
+      firebaseParaLocalStorage();
+      reset();
+    } else {
+      alert("Informe valores válidos para alterar!");
+    }
   }
 });
 
@@ -82,7 +100,7 @@ function ConstrutorTela(
       "botao-texto-adicionar"
     );
 
-    tituloHeader.innerHTML = titulo;
+    tituloHeader.textContent = titulo;
     imagem.setAttribute("src", imgSrc);
     imagem.setAttribute("title", imgTitle);
     imagem.setAttribute("alt", imgAlt);
@@ -92,12 +110,13 @@ function ConstrutorTela(
     botaoConfirmarAdicionar.id = botaoId;
     console.log(botaoConfirmarAdicionar.id);
   }
-
 }
 
 function fecharJanela() {
   if (telaPopup) {
     telaPopup.style.display = "none";
+    getUser.value = "";
+    getMatricula.value = "";
   }
 }
 
@@ -145,9 +164,7 @@ function GeradorDeListaItem(item) {
 
 function botaoConfiguracaoMenu(index, doc, item, usuariosParaAlterar) {
   item[index].classList.toggle("selecionado");
-  const configToMenu = document.querySelector("#config-menu");
   const menuItem = document.querySelectorAll(".menu-item");
-  // const editarApagar = document.getElementsByClassName("menu-item");
 
   console.log(usuariosParaAlterar);
 
@@ -155,10 +172,11 @@ function botaoConfiguracaoMenu(index, doc, item, usuariosParaAlterar) {
     configToMenu.style.display = "none";
   } else if (usuariosParaAlterar.length >= 2) {
     menuItem[0].style.display = "none";
-    menuItem[1].style.height = "fit-content";
+    menuItem[1].style.height = "75%";
   } else {
     configToMenu.style.display = "flex";
     menuItem[0].style.display = "flex";
+    menuItem[1].style.height = "35%";
   }
 
   menuItem[1].onclick = () => {
@@ -196,6 +214,7 @@ function cache() {
 
       const botaoConfigurar = document.querySelectorAll(".button-config");
       const itemDaLista = document.querySelectorAll(".item-da-lista");
+
 
       botaoConfigurar[index].addEventListener("click", () => {
         if (usuariosParaAlterar.includes(doc.id)) {
